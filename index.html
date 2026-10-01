@@ -71,6 +71,7 @@ details.full .src{font-size:12px;color:var(--muted);margin:12px 0}
 .empty{padding:60px 0;text-align:center;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding-block:20px 120px;color:var(--muted);font-size:13px}
 footer p{margin:0 0 8px;max-width:75ch}
+footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .fabs{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;justify-content:center;gap:10px;padding:0 16px;pointer-events:none}.fab{pointer-events:auto;display:flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:16px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:0 24px;min-height:52px;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}
 .fab svg{width:22px;height:22px}.fab#rand-drink{background:var(--fg);color:var(--bg)}
 .shade{position:fixed;inset:0;background:var(--shade);z-index:8}
@@ -161,9 +162,7 @@ header.top .wrap{position:relative}.eyebrow{padding-right:84px}
 </main>
 
 <footer><div class="wrap">
-  <p>菜單與價格整理自 MENU爸、foodpanda、Uber Eats、各大食記、連鎖品牌公開菜單和 Google 地圖店家相片，價格會調整，各來源的年份也不同，實際以店內為準。標「非完整」的店只查到部分品項。</p>
-  <p>店家名單從 Google 地圖掃描校門口周邊而來，只收錄查得到至少兩個標價品項的店；網路上找不到菜單或價格的店（例如部分巷內小吃、自助餐）沒有放進來，所以仍不是所有餐廳的完整名單。前 25 家的地址、座標和營業時間已逐家對照 Google 地圖；較晚加入的店只核對了座標，營業時間請點「開地圖」確認；其中菜單來自 Google 地圖店家相片的店，價格是從照片讀出，年份不明，可能已調整。步行分鐘由座標算出直線距離再乘 1.3 估算。連鎖店用全台公告價，分店可能略有不同。</p>
-  <p>外送平台的價格常比店內高，所以這裡引用平台價的店（50嵐、薛丁格的貓、五桐號）已在卡片上註明。</p>
+  <p>網站如果有問題，或是有任何想法與建議，歡迎透過 IG 聯絡我：<a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a></p>
 </div></footer>
 
 <div class="fabs"><button class="fab" id="rand-food" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span id="rf-l">隨機吃一家</span></button><button class="fab" id="rand-drink" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span>隨機喝一家</span></button></div>
