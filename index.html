@@ -25,7 +25,6 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px
 *{box-sizing:border-box}
 .wrap{max-width:1100px;margin-inline:auto;padding-inline:16px}
 header.top{padding-block:20px 12px}
-.eyebrow{font-size:11px;letter-spacing:.16em;color:var(--accent);font-weight:700}
 h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,7vw,44px);line-height:1.15;margin:4px 0 6px;text-wrap:balance}
 .lede{color:var(--muted);margin:0;font-size:14px;max-width:60ch}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-block:1px solid var(--line);padding-block:10px}
@@ -121,7 +120,7 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
 :root[data-pal="black"]{--bg:#000000;--surface:#0E0E0E;--fg:#EDEDED;--muted:#9A9A9A;--line:#262626;--accent:#FFD166;--accent-ink:#1A1200;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#1A1A1A;--shade:rgba(0,0,0,0.6);color-scheme:dark}
 :root[data-pal="forest"]{--bg:#0C1710;--surface:#14231A;--fg:#E3F1E6;--muted:#93AE9B;--line:#25392B;--accent:#7ED38F;--accent-ink:#08210F;--price:#F2A06A;--ok:#7ED38F;--off:#E0B45A;--chip:#1D3324;--shade:rgba(0,0,0,0.6);color-scheme:dark}
 :root[data-pal="rose"]{--bg:#1C0F14;--surface:#2A1720;--fg:#F7E6EB;--muted:#BE9AA7;--line:#43232F;--accent:#FF8FAB;--accent-ink:#3A0A1A;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#3A1E29;--shade:rgba(0,0,0,0.6);color-scheme:dark}
-header.top .wrap{position:relative}.eyebrow{padding-right:84px}
+header.top .wrap{position:relative}h1{padding-right:84px}
 .palbtn{position:absolute;right:16px;top:0;font:inherit;font-size:13px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:flex;align-items:center;gap:6px}
 .palbtn i{width:14px;height:14px;border-radius:50%;background:var(--accent);display:inline-block}
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
@@ -136,7 +135,6 @@ header.top .wrap{position:relative}.eyebrow{padding-right:84px}
 
 <header class="top"><div class="wrap">
   <button class="palbtn" id="palbtn" type="button" aria-haspopup="dialog"><i></i>配色</button>
-  <div class="eyebrow">SHIH CHIEN UNIVERSITY · 大直街 70 號</div>
   <h1>實踐大直吃喝地圖</h1>
   <p class="lede">校門口往外步行約 15 分鐘內的餐廳和手搖飲。點進店家看完整菜單，選不出來就按下方的隨機按鈕。</p>
 </div></header>
@@ -558,6 +556,32 @@ const D=[
  ["加點","龍鬚菜 38|辣黃豆芽 38|蔥花 38|麻藥蛋 38"],
  ["飲料","Pororo 牛奶口味 68|漢拿峰橘子風味蘇打 68|七星汽水 68|海太水梨汁 68|海太蘋果汁 68|Milkis 乳酸飲料 68"]],
  hl:"韓國炸醬麵 208|豆腐鍋（豬） 288|辣炸薯條魚板 128"},
+{n:"清心福全 北安店",ty:"手搖飲",t:"經典茶飲・奶茶・鮮奶，優多系列",a:"北安路595巷35號",ll:[25.0822004, 121.5470996],ms:"baliman.tw 清心福全 2026 菜單（北部價格，更新 2026-10）；季節限定以當期為準",n2:"大杯多為 L 價；珍珠、粉圓、椰果加 10 元",
+ m:[["茗品","烏龍綠茶 30/35|特級綠茶 30/35|錫蘭紅茶 30/35|極品菁茶 30/35|原鄉四季 30/35|特選普洱 30/35"],
+ ["奶茶","珍珠奶茶 50/60|錫蘭奶紅 50/60|烏龍奶茶 50/60|特級奶綠 50/60|仙草凍奶茶 50/60|椰果奶茶 50/60|布丁奶茶 50/60|蜜香奶茶 50/65|琥珀黑糖奶茶 50/60"],
+ ["鮮奶","鮮奶茶 55/70|珍珠鮮奶茶 55/70|珍珠蜜香鮮奶普洱 55/75|頂級可可拿鐵 65/85|咖啡拿鐵 75"],
+ ["特調","蜜茶 35/45|梅子綠茶 45/55|頂級可可 50/65"],
+ ["優多","優多綠茶 55|優多百香果綠茶 65|優多檸檬 70|優多紅柚茶凍 85"]],
+ hl:"烏龍綠茶 30/35|珍珠奶茶 50/60|鮮奶茶 55/70|優多綠茶 55"},
+{n:"東方泰國料理",ty:"日韓・異國",t:"平價泰式料理・綠咖哩・月亮蝦餅",a:"大直街33巷3號",ll:[25.0821891, 121.5466353],part:1,ms:"部落格食記（2017）；價格年份較舊",n2:"價格為 2017 年食記所載，可能已調整；營業時間請看 Google 地圖",
+ m:[["飯・麵","椰汁飯（雞／豬／牛／海鮮） 120|綠咖哩飯（雞／豬／牛／海鮮） 120|牛肉炒河粉 120|蝦醬炒飯 120|椰汁牛肉河粉 110|雲南椒麻雞 220"],
+ ["小菜・炸物","月亮蝦餅（小） 180|涼拌海鮮 200|涼拌青木瓜絲 100|蝦醬炒空心菜 100|蝦醬四季豆 150"],
+ ["飲料・甜點","芒果汁 60|泰式鮮奶茶 40|紅豆西米露 40|椰子水 80|摩摩喳喳 60"]],
+ hl:"綠咖哩飯（雞／豬／牛／海鮮） 120|月亮蝦餅（小） 180|雲南椒麻雞 220"},
+{n:"夫妻韓式餐廳",ty:"日韓・異國",t:"家庭式韓式料理・嫩豆腐煲・烤肉",a:"北安路621巷43號1樓",ll:[25.0830686, 121.5469275],part:1,ms:"搜尋整理（外送平台菜單）；價格年份不明",n2:"價格可能含外送平台加價；營業時間請看 Google 地圖",
+ m:[["湯鍋・飯","牛肉嫩豆腐煲 230|蛤蜊嫩豆腐煲 220|豬肉嫩豆腐煲 220|石鍋拌飯 220|人蔘鷄湯 520|馬鈴薯排骨湯 330"],
+ ["麵","海鮮炒碼麵 280|涼拌麵 250"],
+ ["烤肉","烤豬五花肉（小） 390|烤肉霜降肉 420"],
+ ["單點","海鮮煎餅 330|韓式炒冬粉 300|辣炒年糕 230|蒸鷄蛋 230|韓式炸雞 420|炸年糕 130"]],
+ hl:"石鍋拌飯 220|蛤蜊嫩豆腐煲 220|海鮮煎餅 330"},
+{n:"高雄黑輪大王",ty:"小吃・早餐",t:"關東煮・麵線",a:"北安路530-2號",ll:[25.079712, 121.546575],part:1,ms:"部落格食記（2017–2022），只確認部分價格",n2:"只查到部分價格；關東煮各品項單價請看店內價目表，湯可免費喝到飽，營業至凌晨 2 點",
+ m:[["已知價格","麵線（小） 30|青菜（單項） 40"]],
+ hl:"麵線（小） 30|青菜（單項） 40"},
+{n:"麵匡匡拉麵食堂 大直實踐店",ty:"麵食",t:"日式拉麵・豚骨・牛奶起司・麻辣",a:"大直街22號",ll:[25.0814197, 121.5463058],part:1,ms:"部落格食記（2023，內湖店）與搜尋整理；官網未列價格",n2:"價格為 2023 年食記所載，可能已調整；內用低消 100 元，目前只收現金／Line Pay；營業時間請看 Google 地圖",
+ m:[["拉麵","招牌豚骨拉麵 175|招牌豚骨拉麵豪華套餐 250|麻辣拉麵豪華套餐 265"],
+ ["小菜・飯","招牌唐揚雞 85|胡麻嫩豆腐 40|炙燒櫛瓜玉米筍 55|明太子叉燒飯（微辣） 65"],
+ ["飲料","四季春茶 40|櫻花煎茶 40|繽紛莓果茶 40|陳阿滿桂花紅茶 40"]],
+ hl:"招牌豚骨拉麵 175|麻辣拉麵豪華套餐 265|招牌唐揚雞 85"},
 ];
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
