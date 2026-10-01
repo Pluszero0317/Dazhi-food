@@ -182,7 +182,7 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
 
 <footer><div class="wrap">
   <p data-lh="footer">網站如果有問題，或是有任何想法與建議，歡迎透過 IG 聯絡我：<a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a></p>
-  <p>更新測試：這行是自動更新測試用的，更新時間 2026/10/02 02:13（台北時間）</p>
+  <p class="lastupd" data-lh="lastUpd"></p>
 </div></footer>
 
 <div class="fabs"><button class="fab" id="rand-food" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span id="rf-l">隨機吃一家</span></button><button class="fab" id="rand-drink" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span>隨機喝一家</span></button></div>
@@ -614,6 +614,7 @@ const D=[
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
 /* 語言（中文／English）：介面、類型與店家簡述有英文；菜單品項與店名維持原文 */
+const LAST_UPDATED="2026/10/02 02:15";
 let lang="zh";
 try{const v=localStorage.getItem("lang");if(v==="en"||v==="zh")lang=v}catch(e){}
 const TYPE_EN={"全部":"All","麵食":"Noodles","飯・簡餐":"Rice & set meals","小吃・早餐":"Snacks & breakfast","速食":"Fast food","義式・西餐":"Western & Italian","日韓・異國":"Japanese, Korean & more","火鍋":"Hot pot","咖啡・甜點":"Cafés & desserts","豆花・冰品":"Tofu pudding & ice","手搖飲":"Bubble tea"};
@@ -638,7 +639,7 @@ zh:{
   empty:"沒有符合的店。換個關鍵字或類型試試。",noPool:"目前沒有符合條件的店",
   close:"關閉",again:"再抽一次",eat:"就吃這家",
   palTitle:"選配色",palDefault:"預設（跟隨手機深淺色）",light:"淺色",dark:"深色",done:"完成",
-  updMsg:"有新版本可用",updBtn:"立即更新",
+  lastUpd:"最後更新："+LAST_UPDATED,updMsg:"有新版本可用",updBtn:"立即更新",
   fav:"♡ 收藏",faved:"♥ 已收藏",favOnly:"只看收藏",emptyFav:"還沒有收藏的店。點卡片上的「♡ 收藏」就能加入。",
   report:"回報錯誤",repTitle:"回報錯誤",repTypes:["價格不對","營業時間不對","已歇業","菜單缺漏","其他"],repDesc:"說明（例如：哪一項、正確的價格或時間）",
   repSend:"複製並開啟 IG 私訊",repCancel:"取消",repHint:"回報內容會複製起來，再貼到 IG 私訊傳給站長。",repNeedType:"請先選擇錯誤類型",repNeedDesc:"選「其他」時請寫說明",repDone:"已複製內容並開啟 IG，請貼到私訊送出，謝謝！若沒有複製成功，可從上方文字框手動複製。",
@@ -662,7 +663,7 @@ en:{
   empty:"No matches. Try another keyword or type.",noPool:"No places match right now",
   close:"Close",again:"Pick again",eat:"Eat here",
   palTitle:"Choose a theme",palDefault:"Default (follow device)",light:"Light",dark:"Dark",done:"Done",
-  updMsg:"A new version is available",updBtn:"Update",
+  lastUpd:"Last updated: "+LAST_UPDATED+" (Taipei time)",updMsg:"A new version is available",updBtn:"Update",
   fav:"♡ Save",faved:"♥ Saved",favOnly:"Saved only",emptyFav:"No saved places yet. Tap “♡ Save” on a card to add one.",
   report:"Report a problem",repTitle:"Report a problem",repTypes:["Wrong price","Wrong hours","Closed down","Menu missing items","Other"],repDesc:"Details (e.g. which item, the correct price or hours)",
   repSend:"Copy & open IG message",repCancel:"Cancel",repHint:"Your report is copied so you can paste it into an IG message to the site owner.",repNeedType:"Please choose a problem type",repNeedDesc:"Please add details for “Other”",repDone:"Copied and IG opened. Please paste it into the message and send. If copying failed, copy the text above manually.",
@@ -951,7 +952,7 @@ $("langbtn").onclick=()=>{lang=lang==="en"?"zh":"en";try{localStorage.setItem("l
 applyLang();
 
 /* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
-const APP_VERSION="df78f30ef6";
+const APP_VERSION="fb1e36c199";
 function showUpdate(){
   if(document.getElementById("upd"))return;
   const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");

@@ -22,7 +22,7 @@
 ## PWA／離線／自動更新
 - 檔案：manifest.webmanifest、sw.js、favicon-48.png、icon-192/512.png、icon-maskable-512.png、apple-touch-icon.png、version.json、stamp.js。手機瀏覽器「加到主畫面」後以獨立視窗開啟（無網址列），可離線看（先連網取最新頁面，連不上才用快取）。
 - 自動更新：index.html 內有 `const APP_VERSION="..."`，version.json 是同一個版本碼。開啟或回到 App 時抓 version.json（no-store）比對，不同就自動重新載入（同一版本只自動重載一次；正在看詳情或面板時改顯示「有新版本可用」提示條）。sw.js 以 updateViaCache:none 註冊並在回到前景時 update()，頁面請求一律加時間參數繞過 GitHub Pages 的 CDN 快取。
-- 版本碼由 stamp.js 依 index.html 內容產生；.git/hooks/pre-commit 會在每次 commit 前自動執行並 git add（hook 只存在這台電腦的 .git，換電腦或重新 clone 後要手動跑 `node stamp.js` 再 commit，否則網站不會知道有新版）。
+- 版本碼由 stamp.js 依 index.html 內容產生，同時更新頁尾「最後更新」時間（index.html 的 LAST_UPDATED，台北時間；內容沒變就不改）；.git/hooks/pre-commit 會在每次 commit 前自動執行並 git add（hook 只存在這台電腦的 .git，換電腦或重新 clone 後要手動跑 `node stamp.js` 再 commit，否則網站不會知道有新版）。
 - 改 sw.js 的快取清單或策略時，把 CACHE 名稱（dazhi-static-v2）的版本號加一。
 - 內建預覽瀏覽器不支援 Service Worker，無法在那裡測；sw.js 邏輯是用 Node 模擬環境驗證過。
 
