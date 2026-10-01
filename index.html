@@ -49,6 +49,16 @@ select{flex:0 0 auto;max-width:44%}
 .head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .head > div{min-width:0}
 .tag{font-size:12px;color:var(--muted);margin-top:2px}
+.fav{font:inherit;font-size:13px;font-weight:700;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;white-space:nowrap;flex:none}
+.fav[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.card .more .mr{display:flex;align-items:center;gap:10px}
+.detail .dh .fav{margin-left:auto}
+.linkbtn{font:inherit;font-size:14px;font-weight:700;color:var(--accent);background:none;border:0;padding:8px 0;cursor:pointer;text-decoration:underline;white-space:nowrap}
+.shade.top{z-index:11}.sheet.top{z-index:12}
+.rname{font-weight:700;color:var(--muted);margin:2px 0 0}
+.rtypes{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+#rtext{display:block;width:100%;font:inherit;font-size:16px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:96px;resize:vertical}
+.rmsg{font-size:13px;color:var(--muted);min-height:1.4em;margin-top:8px}
 .zhn{color:var(--muted);font-size:.82em}
 .range.hrs{white-space:nowrap}.range.hrs,.range.na{text-align:right;line-height:1.4}.range.na{color:var(--muted);font-family:var(--sans);font-weight:400;font-size:12px;max-width:6.5em}
 .range{font-family:var(--mono);font-weight:600;color:var(--price);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -154,7 +164,7 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
     </select>
   </div>
   <div class="row scroll" id="types" role="group" aria-label="類型"></div>
-  <div class="row scroll"><button class="chip line" id="openNow" aria-pressed="false" data-l="openNow">現在營業中</button></div>
+  <div class="row scroll"><button class="chip line" id="openNow" aria-pressed="false" data-l="openNow">現在營業中</button><button class="chip line" id="favOnly" aria-pressed="false" data-l="favOnly">只看收藏</button></div>
 </div></div>
 
 <main class="wrap">
@@ -615,6 +625,9 @@ zh:{
   empty:"沒有符合的店。換個關鍵字或類型試試。",noPool:"目前沒有符合條件的店",
   close:"關閉",again:"再抽一次",eat:"就吃這家",
   palTitle:"選配色",palDefault:"預設（跟隨手機深淺色）",light:"淺色",dark:"深色",done:"完成",
+  fav:"♡ 收藏",faved:"♥ 已收藏",favOnly:"只看收藏",emptyFav:"還沒有收藏的店。點卡片上的「♡ 收藏」就能加入。",
+  report:"回報錯誤",repTitle:"回報錯誤",repTypes:["價格不對","營業時間不對","已歇業","菜單缺漏","其他"],repDesc:"說明（例如：哪一項、正確的價格或時間）",
+  repSend:"複製並開啟 IG 私訊",repCancel:"取消",repHint:"回報內容會複製起來，再貼到 IG 私訊傳給站長。",repNeedType:"請先選擇錯誤類型",repNeedDesc:"選「其他」時請寫說明",repDone:"已複製內容並開啟 IG，請貼到私訊送出，謝謝！若沒有複製成功，可從上方文字框手動複製。",
   hours:s=>{const D="日一二三四五六";return s.h?s.h.replace(/,/g," / ")+(s.hd?"；"+Object.entries(s.hd).map(([d,v])=>`週${D[d]} ${v.replace(/,/g," / ")}`).join("；"):"")+(s.off&&s.off.length?`，週${s.off.map(d=>D[d]).join("、")}公休`:""):"營業時間請看 Google 地圖"}
 },
 en:{
@@ -635,6 +648,9 @@ en:{
   empty:"No matches. Try another keyword or type.",noPool:"No places match right now",
   close:"Close",again:"Pick again",eat:"Eat here",
   palTitle:"Choose a theme",palDefault:"Default (follow device)",light:"Light",dark:"Dark",done:"Done",
+  fav:"♡ Save",faved:"♥ Saved",favOnly:"Saved only",emptyFav:"No saved places yet. Tap “♡ Save” on a card to add one.",
+  report:"Report a problem",repTitle:"Report a problem",repTypes:["Wrong price","Wrong hours","Closed down","Menu missing items","Other"],repDesc:"Details (e.g. which item, the correct price or hours)",
+  repSend:"Copy & open IG message",repCancel:"Cancel",repHint:"Your report is copied so you can paste it into an IG message to the site owner.",repNeedType:"Please choose a problem type",repNeedDesc:"Please add details for “Other”",repDone:"Copied and IG opened. Please paste it into the message and send. If copying failed, copy the text above manually.",
   hours:s=>s.h?s.h.replace(/,/g," / ")+(s.hd?"; "+Object.entries(s.hd).map(([d,v])=>`${DNE[d]} ${v.replace(/,/g," / ")}`).join("; "):"")+(s.off&&s.off.length?`, closed ${s.off.map(d=>DNE[d]).join(", ")}`:""):"See Google Maps for hours"
 }};
 const T=k=>I[lang][k];
@@ -752,7 +768,10 @@ D.forEach((s,i)=>{
   s.min=s.all.length?Math.min(...s.all.map(x=>x.min)):null;s.max=s.all.length?Math.max(...s.all.map(x=>x.max)):null;
   s.top=s.hl?parseList(s.hl):s.all.slice(0,3);
 });
-const st={cat:"food",ty:"全部",open:false};
+const st={cat:"food",ty:"全部",open:false,fav:false};
+let favs=new Set();
+try{const a=JSON.parse(localStorage.getItem("favs")||"[]");if(Array.isArray(a))favs=new Set(a)}catch(e){}
+const favBtn=s=>`<button type="button" class="fav" data-fav="${esc(s.n)}" aria-pressed="${favs.has(s.n)}">${favs.has(s.n)?T("faved"):T("fav")}</button>`;
 const $=id=>document.getElementById(id);
 function buildTypes(){const box=$("types");box.innerHTML="";
   box.hidden=st.cat!=="food";
@@ -763,6 +782,7 @@ $("cat").querySelectorAll("button").forEach(b=>b.onclick=()=>{st.cat=b.dataset.c
   $("cat").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
   setPh();buildTypes();render()});
 $("openNow").onclick=e=>{st.open=!st.open;e.currentTarget.setAttribute("aria-pressed",String(st.open));render()};
+$("favOnly").onclick=e=>{st.fav=!st.fav;e.currentTarget.setAttribute("aria-pressed",String(st.fav));render()};
 $("q").oninput=render;$("sort").onchange=render;
 
 function taipeiNow(){const p=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Taipei",weekday:"short",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
@@ -790,7 +810,7 @@ function cardHTML(s,now,q){
   return `<article class="card" data-i="${s.id}" role="button" tabindex="0" aria-label="${esc(T("view")(s.n))}"><div class="head"><div><h2>${esc(s.n)}</h2><div class="tag">${esc(tyL(s.ty))}${SEP()}${esc(descOf(s))}</div></div>${range}</div>
   ${hit}${items.length?`<ul class="menu">${items.map(x=>li(x,q)).join("")}</ul>`:""}
   <div class="meta"><div class="badges"><span class="b walk">${T("walk")(s.w)}</span>${badgeOf(s,now)}${s.part?`<span class="b">${T("partial")}</span>`:""}</div></div>
-  <div class="more"><span>${s.all.length?T("more")(s.all.length):T("moreInfo")}</span><span aria-hidden="true">›</span></div></article>`}
+  <div class="more"><span>${s.all.length?T("more")(s.all.length):T("moreInfo")}</span><span class="mr">${favBtn(s)}<span aria-hidden="true">›</span></span></div></article>`}
 
 /* 店家詳情（完整菜單） */
 const detail=$("detail");let lastFocus=null;
@@ -798,25 +818,25 @@ function openDetail(id){
   const s=D[id],now=taipeiNow(),q=$("q").value.trim().toLowerCase();
   const mq=s.a?encodeURIComponent("台北市中山區"+s.a+" "+s.n):encodeURIComponent(s.n+" "+s.ll.join(","));
   lastFocus=document.activeElement;
-  detail.innerHTML=`<div class="dh"><div class="wrap2"><button type="button" class="back" id="dback">${T("back")}</button><div class="dt">${esc(s.n)}</div></div></div>
+  detail.innerHTML=`<div class="dh"><div class="wrap2"><button type="button" class="back" id="dback">${T("back")}</button><div class="dt">${esc(s.n)}</div>${favBtn(s)}</div></div>
   <div class="body"><div class="info">
     <div class="tag" style="margin:0">${esc(tyL(s.ty))}${SEP()}${esc(descOf(s))}</div>
     <div class="badges"><span class="b walk">${T("walk")(s.w)}</span>${badgeOf(s,now)}${s.gv?`<span class="b">${T("gv")}</span>`:""}${s.part?`<span class="b">${T("partial")}</span>`:""}${s.all.length?`<span class="b">${s.min===s.max?"$"+s.min:"$"+s.min+"–"+s.max}</span>`:""}</div>
     <div>${esc(hoursText(s))}</div>
-    <div>${s.a?esc(s.a)+"　":""}<a class="map" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${mq}">${T("openMap")}</a></div>
+    <div>${s.a?esc(s.a)+"　":""}<a class="map" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${mq}">${T("openMap")}</a>　<button type="button" class="linkbtn" id="repbtn">⚑ ${T("report")}</button></div>
     ${s.n2?`<div class="note">${esc(noteOf(s))}</div>`:""}</div>
   ${s.cats.length>1?`<div class="jump row scroll">${s.cats.map((c,i)=>`<button type="button" class="chip line" data-j="${i}">${esc(catL(c[0]))}</button>`).join("")}</div>`:""}
   ${s.cats.map(([c,l],i)=>`<section id="sec${i}"><h3>${esc(catL(c))}</h3><ul class="menu">${l.map(x=>li(x,q)).join("")}</ul></section>`).join("")}
   ${s.all.length?`<div class="src">${T("src")(s.all.length)}${esc(s.ms)}</div>`:`<div class="src">${T("noMenu")}</div>`}</div>`;
   detail.hidden=false;document.body.style.overflow="hidden";detail.scrollTop=0;
-  $("dback").onclick=closeDetail;$("dback").focus();
+  $("dback").onclick=closeDetail;$("dback").focus();$("repbtn").onclick=e=>openReport(s,e.currentTarget);
   detail.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{const e=$("sec"+b.dataset.j);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})});
   if(q){const m=detail.querySelector("mark");if(m)setTimeout(()=>m.scrollIntoView({block:"center"}),50)}
 }
-function closeDetail(){detail.hidden=true;document.body.style.overflow="";if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
-document.addEventListener("click",e=>{const c=e.target.closest(".card");if(c&&!e.target.closest("a")){if(!sheet.hidden)closeSheet(true);openDetail(+c.dataset.i)}});
-document.addEventListener("keydown",e=>{const c=e.target.closest&&e.target.closest(".card");if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();if(!sheet.hidden)closeSheet(true);openDetail(+c.dataset.i)}
-  if(e.key==="Escape"){if(!detail.hidden)closeDetail();else if(!sheet.hidden)closeSheet()}});
+function closeDetail(){detail.hidden=true;if(st.fav)render();document.body.style.overflow="";if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
+document.addEventListener("click",e=>{const fb=e.target.closest(".fav");if(fb){toggleFav(fb.dataset.fav);return}const c=e.target.closest(".card");if(c&&!e.target.closest("a")){if(!sheet.hidden)closeSheet(true);openDetail(+c.dataset.i)}});
+document.addEventListener("keydown",e=>{const c=e.target.closest&&e.target.closest(".card");if(c&&e.target===c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();if(!sheet.hidden)closeSheet(true);openDetail(+c.dataset.i)}
+  if(e.key==="Escape"){if(!sheet.hidden)closeSheet();else if(!detail.hidden)closeDetail()}});
 
 let current=[];
 function rlabel(){$("rf-l").textContent=(st.cat==="food"&&st.ty!=="全部")?T("randFood")+SEP()+tyL(st.ty):T("randFood")}
@@ -826,24 +846,24 @@ function render(){rlabel();
     if(st.cat==="drink"?!s.drink:s.drink)return false;
     if(st.cat==="food"&&st.ty!=="全部"&&s.ty!==st.ty)return false;
     if(q&&!(s.n+s.t+(lang==="en"?(EN_T[s.n]||""):"")+s.all.map(nameText).join(" ")).toLowerCase().includes(q))return false;
-    if(st.open&&status(s,now)!==true)return false;return true});
+    if(st.open&&status(s,now)!==true)return false;if(st.fav&&!favs.has(s.n))return false;return true});
   const k=$("sort").value;
   list.sort((a,b)=>k==="name"?a.n.localeCompare(b.n,"zh-Hant"):k==="walk"?a.w-b.w||a.n.localeCompare(b.n,"zh-Hant"):k==="pasc"?(a.min??1e9)-(b.min??1e9):(b.max??-1)-(a.max??-1));
   current=list;
   const tot=D.filter(s=>st.cat==="drink"?s.drink:!s.drink).length;
   $("count").textContent=T("count")(list.length,tot,st.cat==="drink",st.open);
-  $("grid").innerHTML=list.length?list.map(s=>cardHTML(s,now,q)).join(""):`<div class="empty">${T("empty")}</div>`;
+  $("grid").innerHTML=list.length?list.map(s=>cardHTML(s,now,q)).join(""):`<div class="empty">${st.fav&&!favs.size?T("emptyFav"):T("empty")}</div>`;
 }
 
 /* 隨機挑選 */
 const sheet=$("sheet"),shade=$("shade");
 let timer=null;
 let lastBtn=null,pickKind="food";
-function closeSheet(keep){clearInterval(timer);sheet.hidden=true;shade.hidden=true;if(!keep&&lastBtn)lastBtn.focus()}
+function closeSheet(keep){clearInterval(timer);sheet.hidden=true;shade.hidden=true;sheet.classList.remove("top");shade.classList.remove("top");if(!keep&&lastBtn)lastBtn.focus()}
 function pickOne(kind){
   kind=kind||pickKind;pickKind=kind;
   const ft=(kind==="food"&&st.cat==="food")?st.ty:"全部";
-  const pool=D.filter(s=>kind==="drink"?s.drink:(!s.drink&&(ft==="全部"||s.ty===ft)));
+  const pool=D.filter(s=>kind==="drink"?s.drink:(!s.drink&&(ft==="全部"||s.ty===ft))).filter(s=>!st.fav||favs.has(s.n));
   clearInterval(timer);
   if(!pool.length){sheet.innerHTML=`<div class="pick">${T("noPool")}</div><div class="acts"><button type="button" id="sc" style="grid-column:1/3">${T("close")}</button></div>`;$("sc").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;return}
   const final=pool[Math.floor(Math.random()*pool.length)];
@@ -857,6 +877,35 @@ function pickOne(kind){
 }
 $("rand-food").onclick=e=>{lastBtn=e.currentTarget;pickOne("food")};$("rand-drink").onclick=e=>{lastBtn=e.currentTarget;pickOne("drink")};shade.onclick=()=>closeSheet();
 
+function toggleFav(n){
+  favs.has(n)?favs.delete(n):favs.add(n);
+  try{localStorage.setItem("favs",JSON.stringify([...favs]))}catch(e){}
+  const on=favs.has(n);
+  document.querySelectorAll(".fav").forEach(b=>{if(b.dataset.fav===n){b.setAttribute("aria-pressed",String(on));b.textContent=on?T("faved"):T("fav")}});
+  if(st.fav&&detail.hidden)render();
+}
+function legacyCopy(t){const a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}
+function copyText(t){
+  try{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).catch(()=>legacyCopy(t))}catch(e){}
+  legacyCopy(t);return Promise.resolve()
+}
+const REP_ZH=["價格不對","營業時間不對","已歇業","菜單缺漏","其他"];
+function openReport(s,btn){
+  lastBtn=btn;clearInterval(timer);let sel=-1;
+  sheet.innerHTML=`<p class="palt">${T("repTitle")}</p><div class="rname">${esc(s.n)}</div><div class="rtypes" role="group">${T("repTypes").map((x,i)=>`<button type="button" class="chip" data-r="${i}" aria-pressed="false">${esc(x)}</button>`).join("")}</div><textarea id="rtext" rows="4" maxlength="500" placeholder="${esc(T("repDesc"))}" aria-label="${esc(T("repDesc"))}"></textarea><div class="rmsg" id="rmsg" aria-live="polite">${T("repHint")}</div><div class="acts"><button type="button" id="rcancel">${T("repCancel")}</button><button type="button" class="go" id="rsend">${T("repSend")}</button></div>`;
+  sheet.classList.add("top");shade.classList.add("top");sheet.hidden=false;shade.hidden=false;
+  sheet.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{sel=+b.dataset.r;sheet.querySelectorAll("[data-r]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+  $("rcancel").onclick=()=>closeSheet();
+  $("rsend").onclick=()=>{
+    const txt=$("rtext").value.trim(),msg=$("rmsg");
+    if(sel<0){msg.textContent=T("repNeedType");return}
+    if(sel===REP_ZH.length-1&&!txt){msg.textContent=T("repNeedDesc");return}
+    const body="【回報錯誤】"+s.n+"\n類型："+REP_ZH[sel]+"\n說明："+(txt||"（無）")+"\n（來自：實踐大直吃喝地圖）";
+    copyText(body);
+    window.open("https://ig.me/m/plus.zero.0317","_blank","noopener");
+    $("rtext").value=body;msg.textContent=T("repDone");
+  };
+}
 const PALS=[["milk", "奶茶", 0, "#F6EFE6", "#3A2A1E", "#8A5A2B"], ["sakura", "櫻花粉", 0, "#FBEFF1", "#3B1F2A", "#C2386B"], ["ocean", "海洋藍", 0, "#EDF3F9", "#12263A", "#1F5FA8"], ["lemon", "檸檬黃", 0, "#FBF7E4", "#2B2A14", "#8A6D00"], ["lav", "薰衣草", 0, "#F3F0FA", "#231B3A", "#6B46C1"], ["coral", "珊瑚橘", 0, "#FFF1EA", "#3A1E12", "#C2410C"], ["mono", "石墨灰", 0, "#F2F2F2", "#1A1A1A", "#2B2B2B"], ["night", "午夜藍", 1, "#0B1220", "#E4ECF8", "#6AA8FF"], ["cafe", "咖啡深棕", 1, "#17110C", "#F1E6D8", "#E0A25A"], ["violet", "紫夜", 1, "#14101F", "#EBE6F8", "#B592FF"], ["black", "純黑", 1, "#000000", "#EDEDED", "#FFD166"], ["forest", "森林墨綠", 1, "#0C1710", "#E3F1E6", "#7ED38F"], ["rose", "玫瑰暗紅", 1, "#1C0F14", "#F7E6EB", "#FF8FAB"]];
 function setPal(k){const r=document.documentElement;if(k)r.setAttribute("data-pal",k);else r.removeAttribute("data-pal");try{k?localStorage.setItem("pal",k):localStorage.removeItem("pal")}catch(e){}}
 try{const k=localStorage.getItem("pal");if(k&&PALS.some(p=>p[0]===k))setPal(k)}catch(e){}
