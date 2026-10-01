@@ -641,11 +641,20 @@ const D=[
  m:[["豆花・冰品","傳統豆花 85|三色布丁 85|嫩仙草奶凍 95|綠豆湯 85"],
  ["雪片冰・刨冰","牛奶雪片 150|抹茶雪片 150|刨冰（任選四種配料） 105"]],
  hl:"傳統豆花 85|嫩仙草奶凍 95|牛奶雪片 150"},
+{n:"鬍鬚張魯肉飯 大直北安店",ty:"飯・簡餐",t:"魯肉飯・便當・老皮嫩肉",a:"北安路631號",ll:[25.0834843, 121.5490495],h:"10:30-21:00",gv:1,part:1,ms:"食尚玩家 2024 鬍鬚張菜單；營業時間來自 Google 地圖",n2:"價格取自 2024 年食記，各分店與外送平台價格可能不同",
+ m:[["飯・便當","魯肉飯 39|魯肉飯便當 80|雞肉飯便當 85|唐山排骨便當 119|雞腿便當 135"]],
+ hl:"魯肉飯 39|魯肉飯便當 80|雞腿便當 135"},
+{n:"大直讚雞肉飯",ty:"飯・簡餐",t:"雞肉飯・咖哩雞肉飯・湯品",a:"北安路571號之1",ll:[25.0810134, 121.5483352],h:"11:00-21:00",gv:1,part:1,ms:"搜尋整理（外送平台菜單）；營業時間來自 Google 地圖",n2:"價格可能含外送平台加價，實際以店內為準",
+ m:[["飯類","雞肉飯 90|咖哩雞肉飯 100|雞肉飯（有配菜） 115|咖哩雞肉飯（有配菜） 125"],
+ ["湯品","北港貢丸湯 40|鱈魚丸湯 40|綜合湯 40"],
+ ["套餐","超值獨享餐（雞肉飯、滷蛋、燙青菜、湯品） 185|健人雙G餐（雞肉飯、單點雞肉、燙青菜） 200|雙倍肉量餐（雞肉飯有配菜、單點雞肉、湯品） 220|雙人分享餐（雞肉飯配菜×2、湯品×2） 290"],
+ ["單點","單點雞肉 70|咖哩單點雞肉 85|白飯 20|燙青菜 45|滷蛋 18"]],
+ hl:"雞肉飯 90|咖哩雞肉飯 100|超值獨享餐（雞肉飯、滷蛋、燙青菜、湯品） 185"},
 ];
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
 /* 語言（中文／English）：介面、類型與店家簡述有英文；菜單品項與店名維持原文 */
-const LAST_UPDATED="2026/10/02 02:28";
+const LAST_UPDATED="2026/10/02 02:30";
 let lang="zh";
 try{const v=localStorage.getItem("lang");if(v==="en"||v==="zh")lang=v}catch(e){}
 const TYPE_EN={"全部":"All","麵食":"Noodles","飯・簡餐":"Rice & set meals","小吃・早餐":"Snacks & breakfast","速食":"Fast food","義式・西餐":"Western & Italian","日韓・異國":"Japanese, Korean & more","火鍋":"Hot pot","咖啡・甜點":"Cafés & desserts","豆花・冰品":"Tofu pudding & ice","手搖飲":"Bubble tea"};
@@ -796,6 +805,10 @@ const EN_N={"另有乾麵、湯麵、冷麵、各式湯品，價目只在店內�
 Object.assign(EN_I,{"三色布丁":"Three-color pudding","嫩仙草奶凍":"Tender grass jelly milk pudding","牛奶雪片":"Milk snow ice","抹茶雪片":"Matcha snow ice","刨冰（任選四種配料）":"Shaved ice (choose 4 toppings)"});
 Object.assign(EN_C,{"豆花・冰品":"Tofu pudding & ice desserts","雪片冰・刨冰":"Snow ice & shaved ice"});
 Object.assign(EN_N,{"價格可能是外送平台價；有顧客提到店內傳統豆花約 60 元（可選三種配料）。只收現金，實際以店內為準":"Prices may be delivery-platform prices; one customer says traditional tofu pudding is about NT$60 in store (choose 3 toppings). Cash only; check in store."});
+Object.assign(EN_I,{"魯肉飯":"Braised pork rice (lu rou fan)","魯肉飯便當":"Braised pork rice lunch box","雞肉飯便當":"Chicken rice lunch box","唐山排骨便當":"Tangshan pork chop lunch box","雞腿便當":"Chicken leg lunch box","咖哩雞肉飯":"Curry chicken rice","雞肉飯（有配菜）":"Chicken rice (with sides)","咖哩雞肉飯（有配菜）":"Curry chicken rice (with sides)","北港貢丸湯":"Beigang meatball soup","鱈魚丸湯":"Cod fish ball soup","綜合湯":"Mixed soup","超值獨享餐（雞肉飯、滷蛋、燙青菜、湯品）":"Value solo set (chicken rice, braised egg, greens, soup)","健人雙G餐（雞肉飯、單點雞肉、燙青菜）":"Fitness double-G set (chicken rice, extra chicken, greens)","雙倍肉量餐（雞肉飯有配菜、單點雞肉、湯品）":"Double-meat set (chicken rice with sides, extra chicken, soup)","雙人分享餐（雞肉飯配菜×2、湯品×2）":"Sharing set for two (2 chicken rice with sides, 2 soups)","單點雞肉":"Chicken (à la carte)","咖哩單點雞肉":"Curry chicken (à la carte)"});
+Object.assign(EN_C,{"飯・便當":"Rice & lunch boxes","湯品":"Soups","套餐":"Set meals"});
+Object.assign(EN_N,{"價格取自 2024 年食記，各分店與外送平台價格可能不同":"Prices are from a 2024 review; they may differ by branch and on delivery platforms","價格可能含外送平台加價，實際以店內為準":"Prices may include delivery-platform markup; check in store"});
+Object.assign(EN_T,{"鬍鬚張魯肉飯 大直北安店":"Braised pork rice, lunch boxes, tender pork skin","大直讚雞肉飯":"Chicken rice, curry chicken rice, soups"});
 Object.assign(EN_T,{"好奇豆花":"Tofu pudding, grass jelly milk pudding, snow ice"});
 Object.assign(EN_T,{"韓下麵 24H 韓式自助無人拉麵":"24-hour Korean self-serve ramen","越南美食 Phở Việt":"Vietnamese pho, pork chop rice, fresh spring rolls","原轉角高雄黑輪大王（大直總店）":"Oden (Japanese-style hot pot snacks)"});
 const nameText=x=>lang==="en"&&EN_I[x.n]?x.n+" "+EN_I[x.n]:x.n;
@@ -1065,7 +1078,7 @@ $("langbtn").onclick=()=>{lang=lang==="en"?"zh":"en";try{localStorage.setItem("l
 applyLang();
 
 /* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
-const APP_VERSION="4f4ecbcf79";
+const APP_VERSION="2cb94c6fce";
 function showUpdate(){
   if(document.getElementById("upd"))return;
   const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");
