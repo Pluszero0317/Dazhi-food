@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0E6B5A">
+<meta name="apple-mobile-web-app-title" content="大直吃喝">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>實踐大直吃喝地圖</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,6 +65,8 @@ select{flex:0 0 auto;max-width:44%}
 .rtypes{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
 #rtext{display:block;width:100%;font:inherit;font-size:16px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:96px;resize:vertical}
 .rmsg{font-size:13px;color:var(--muted);min-height:1.4em;margin-top:8px}
+.upd{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));z-index:20;background:var(--fg);color:var(--bg);border-radius:12px;padding:10px 12px 10px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,.28);font-size:14px;max-width:560px;margin-inline:auto}
+.upd button{font:inherit;font-weight:700;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;flex:none}
 .zhn{color:var(--muted);font-size:.82em}
 .range.hrs{white-space:nowrap}.range.hrs,.range.na{text-align:right;line-height:1.4}.range.na{color:var(--muted);font-family:var(--sans);font-weight:400;font-size:12px;max-width:6.5em}
 .range{font-family:var(--mono);font-weight:600;color:var(--price);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -625,6 +633,7 @@ zh:{
   empty:"沒有符合的店。換個關鍵字或類型試試。",noPool:"目前沒有符合條件的店",
   close:"關閉",again:"再抽一次",eat:"就吃這家",
   palTitle:"選配色",palDefault:"預設（跟隨手機深淺色）",light:"淺色",dark:"深色",done:"完成",
+  updMsg:"有新版本可用",updBtn:"立即更新",
   fav:"♡ 收藏",faved:"♥ 已收藏",favOnly:"只看收藏",emptyFav:"還沒有收藏的店。點卡片上的「♡ 收藏」就能加入。",
   report:"回報錯誤",repTitle:"回報錯誤",repTypes:["價格不對","營業時間不對","已歇業","菜單缺漏","其他"],repDesc:"說明（例如：哪一項、正確的價格或時間）",
   repSend:"複製並開啟 IG 私訊",repCancel:"取消",repHint:"回報內容會複製起來，再貼到 IG 私訊傳給站長。",repNeedType:"請先選擇錯誤類型",repNeedDesc:"選「其他」時請寫說明",repDone:"已複製內容並開啟 IG，請貼到私訊送出，謝謝！若沒有複製成功，可從上方文字框手動複製。",
@@ -648,6 +657,7 @@ en:{
   empty:"No matches. Try another keyword or type.",noPool:"No places match right now",
   close:"Close",again:"Pick again",eat:"Eat here",
   palTitle:"Choose a theme",palDefault:"Default (follow device)",light:"Light",dark:"Dark",done:"Done",
+  updMsg:"A new version is available",updBtn:"Update",
   fav:"♡ Save",faved:"♥ Saved",favOnly:"Saved only",emptyFav:"No saved places yet. Tap “♡ Save” on a card to add one.",
   report:"Report a problem",repTitle:"Report a problem",repTypes:["Wrong price","Wrong hours","Closed down","Menu missing items","Other"],repDesc:"Details (e.g. which item, the correct price or hours)",
   repSend:"Copy & open IG message",repCancel:"Cancel",repHint:"Your report is copied so you can paste it into an IG message to the site owner.",repNeedType:"Please choose a problem type",repNeedDesc:"Please add details for “Other”",repDone:"Copied and IG opened. Please paste it into the message and send. If copying failed, copy the text above manually.",
@@ -930,6 +940,36 @@ function applyLang(){
 }
 $("langbtn").onclick=()=>{lang=lang==="en"?"zh":"en";try{localStorage.setItem("lang",lang)}catch(e){}applyLang()};
 applyLang();
+
+/* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
+const APP_VERSION="e8cc979b9d";
+function showUpdate(){
+  if(document.getElementById("upd"))return;
+  const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");
+  b.innerHTML=`<span>${T("updMsg")}</span><button type="button">${T("updBtn")}</button>`;
+  b.querySelector("button").onclick=()=>location.reload();
+  document.body.appendChild(b);
+}
+async function checkUpdate(){
+  try{
+    const r=await fetch("version.json?_="+Date.now(),{cache:"no-store"});if(!r.ok)return;
+    const j=await r.json();if(!j.v||j.v===APP_VERSION)return;
+    let tried="";try{tried=sessionStorage.getItem("reloadedFor")||""}catch(e){}
+    if(detail.hidden&&sheet.hidden&&tried!==j.v){try{sessionStorage.setItem("reloadedFor",j.v)}catch(e){}location.reload()}
+    else showUpdate();
+  }catch(e){}
+}
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{});
+    checkUpdate();
+  });
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState!=="visible")return;
+    checkUpdate();
+    navigator.serviceWorker.getRegistration().then(r=>r&&r.update()).catch(()=>{});
+  });
+}
 </script>
 
 </body>

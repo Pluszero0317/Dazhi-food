@@ -19,6 +19,13 @@
 - 回報錯誤：詳情頁資訊區的「⚑ 回報錯誤」開底部面板（價格不對／營業時間不對／已歇業／菜單缺漏／其他＋說明）；沒有後端，送出時把內容複製到剪貼簿並開啟 https://ig.me/m/plus.zero.0317（IG 私訊），使用者貼上送出。若之後要自動收集，可改接 Google 表單或 Formspree。
 - 中英切換：右上角「EN／中文」按鈕（與配色按鈕同一列，手機寬度下獨立一列以免擠到說明文字），選擇存 localStorage（key: lang，有 try/catch）。語言資料在 index.html 的 `I`（介面字串）、`TYPE_EN`、`PAL_EN`、`EN_T`（每家店的簡述英文，鍵為店名）。英文版翻介面、類型、店家簡述（`EN_T`）、菜單品項（`EN_I`，英文名後面附小字中文原名）、菜單分類（`EN_C`）、備註（`EN_N`）；店名與來源（ms）維持中文。新增店家時要同步補 `EN_T`、`EN_I`、`EN_C`、`EN_N`（沒補會退回中文）。
 
+## PWA／離線／自動更新
+- 檔案：manifest.webmanifest、sw.js、icon.svg、icon-192/512.png、icon-maskable-512.png、apple-touch-icon.png、version.json、stamp.js。手機瀏覽器「加到主畫面」後以獨立視窗開啟（無網址列），可離線看（先連網取最新頁面，連不上才用快取）。
+- 自動更新：index.html 內有 `const APP_VERSION="..."`，version.json 是同一個版本碼。開啟或回到 App 時抓 version.json（no-store）比對，不同就自動重新載入（同一版本只自動重載一次；正在看詳情或面板時改顯示「有新版本可用」提示條）。sw.js 以 updateViaCache:none 註冊並在回到前景時 update()，頁面請求一律加時間參數繞過 GitHub Pages 的 CDN 快取。
+- 版本碼由 stamp.js 依 index.html 內容產生；.git/hooks/pre-commit 會在每次 commit 前自動執行並 git add（hook 只存在這台電腦的 .git，換電腦或重新 clone 後要手動跑 `node stamp.js` 再 commit，否則網站不會知道有新版）。
+- 改 sw.js 的快取清單或策略時，把 CACHE 名稱（dazhi-static-v1）的版本號加一。
+- 內建預覽瀏覽器不支援 Service Worker，無法在那裡測；sw.js 邏輯是用 Node 模擬環境驗證過。
+
 ## 資料格式（JS 陣列 D 內的物件）
 欄位：n 店名、ty 類型（須在 FOOD_TYPES 或為「手搖飲」）、t 簡述、a 地址、ll [緯度,經度]、h 營業時間、hd/off 公休、gv、part:1 表示非完整菜單、ms 來源說明、n2 備註、hl 精選品項。
 菜單：`m:[["分類","品名 價格|品名 價格/價格|品名 168–178|品名 55起"],...]`

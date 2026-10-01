@@ -1,0 +1,17 @@
+{
+  "name": "實踐大直吃喝地圖",
+  "short_name": "大直吃喝",
+  "description": "實踐大學大直校區步行 15 分鐘內的餐廳與手搖飲，含菜單與價格。",
+  "lang": "zh-TW",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F1F4F0",
+  "theme_color": "#0E6B5A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
