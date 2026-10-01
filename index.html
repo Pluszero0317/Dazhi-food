@@ -72,6 +72,14 @@ body.mapmode .fabs{display:none}
 #map{height:420px;margin-bottom:60px;border:1px solid var(--line);border-radius:8px;position:relative;z-index:0;isolation:isolate;background:var(--chip)}
 #map .empty{padding:40px 16px}
 #map.leaflet-container{font:inherit}
+.leaflet-tint-pane{mix-blend-mode:color}
+#map .leaflet-tile-pane{filter:grayscale(1) contrast(.9) brightness(1.06)}
+#map.dark .leaflet-tile-pane{filter:grayscale(1) invert(1) contrast(.9) brightness(.85)}
+#map .leaflet-bar{border:1px solid var(--line);box-shadow:none}
+#map .leaflet-bar a{background:var(--surface);color:var(--fg);border-bottom-color:var(--line)}
+#map .leaflet-bar a:hover{background:var(--chip)}
+#map .leaflet-control-attribution{background:color-mix(in srgb,var(--surface) 78%,transparent);color:var(--muted)}
+#map .leaflet-control-attribution a{color:var(--accent)}
 #map .leaflet-popup-content-wrapper{background:var(--surface);color:var(--fg);border-radius:10px}
 #map .leaflet-popup-tip{background:var(--surface)}
 #map .leaflet-popup-content{margin:12px 14px;font-size:14px;line-height:1.5}
@@ -84,11 +92,11 @@ body.mapmode .fabs{display:none}
 .mpa{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px}
 .mpbtn{font:inherit;font-size:14px;font-weight:700;min-height:36px;padding:0 12px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer}
 .pin{background:none;border:0}
-.pin i{position:absolute;left:0;top:0;width:24px;height:24px;background:var(--accent);border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.pin i{position:absolute;left:0;top:0;width:24px;height:24px;background:var(--accent);border:3px solid var(--surface);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.45)}
 .pin i::after{content:"";position:absolute;left:5px;top:5px;width:8px;height:8px;border-radius:50%;background:#fff}
 .pin.drink i{background:var(--price)}
 .campus{background:none;border:0}
-.campus span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:var(--fg);color:var(--bg);font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.4);border:2px solid #fff}
+.campus span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:var(--fg);color:var(--bg);font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.4);border:2px solid var(--surface)}
 .zhn{color:var(--muted);font-size:.82em}
 .range.hrs{white-space:nowrap}.range.hrs,.range.na{text-align:right;line-height:1.4}.range.na{color:var(--muted);font-family:var(--sans);font-weight:400;font-size:12px;max-width:6.5em}
 .range{font-family:var(--mono);font-weight:600;color:var(--price);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -637,7 +645,7 @@ const D=[
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
 /* 語言（中文／English）：介面、類型與店家簡述有英文；菜單品項與店名維持原文 */
-const LAST_UPDATED="2026/10/02 02:25";
+const LAST_UPDATED="2026/10/02 02:28";
 let lang="zh";
 try{const v=localStorage.getItem("lang");if(v==="en"||v==="zh")lang=v}catch(e){}
 const TYPE_EN={"全部":"All","麵食":"Noodles","飯・簡餐":"Rice & set meals","小吃・早餐":"Snacks & breakfast","速食":"Fast food","義式・西餐":"Western & Italian","日韓・異國":"Japanese, Korean & more","火鍋":"Hot pot","咖啡・甜點":"Cafés & desserts","豆花・冰品":"Tofu pudding & ice","手搖飲":"Bubble tea"};
@@ -955,7 +963,23 @@ function openReport(s,btn){
 }
 /* 地圖檢視：打開時才載入 Leaflet（含完整性雜湊），底圖為 OpenStreetMap */
 const LEAFLET_CSS="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",LEAFLET_JS="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-let leafletP=null,map=null,pins=null,campusMarker=null,mapSig="";
+let leafletP=null,map=null,pins=null,campusMarker=null,mapSig="",baseLayer=null,baseDark=null,tintRect=null,ring=null;
+function isDarkTheme(){
+  const r=document.documentElement,pal=r.getAttribute("data-pal");
+  if(pal){const p=PALS.find(x=>x[0]===pal);return !!(p&&p[2])}
+  const th=r.getAttribute("data-theme");if(th)return th==="dark";
+  return !!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+}
+/* 底圖用 OpenStreetMap，CSS 濾鏡去色（深色配色時反相），再用目前配色的主色染色，讓地圖跟網站同一個色調 */
+function restyleMap(){
+  if(!map)return;
+  const dark=isDarkTheme();
+  if(!baseLayer)baseLayer=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
+  baseDark=dark;map.getContainer().classList.toggle("dark",dark);
+  const ac=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#0E6B5A";
+  tintRect.setStyle({fillColor:ac,fillOpacity:dark?0.55:0.45});
+  ring.setStyle({color:ac});
+}
 function loadLeaflet(){
   if(window.L)return Promise.resolve();
   if(leafletP)return leafletP;
@@ -997,13 +1021,17 @@ function updateMap(list){
     if(!map){
       box.innerHTML="";
       map=L.map(box).setView(CAMPUS,17);
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
-      L.circle(CAMPUS,{radius:865,color:"#0E6B5A",weight:1.5,dashArray:"6 6",fill:false,interactive:false}).addTo(map);
+      map.createPane("tint");map.getPane("tint").style.zIndex=250;map.getPane("tint").style.pointerEvents="none";
+      tintRect=L.rectangle([[-80,-179],[80,179]],{pane:"tint",stroke:false,fillOpacity:0.4,interactive:false}).addTo(map);
+      ring=L.circle(CAMPUS,{radius:865,weight:1.5,dashArray:"6 6",fill:false,interactive:false}).addTo(map);
+      restyleMap();
+      if(window.matchMedia){const mq=matchMedia("(prefers-color-scheme: dark)");(mq.addEventListener?mq.addEventListener("change",restyleMap):mq.addListener&&mq.addListener(restyleMap))}
       pins=L.layerGroup().addTo(map);
       campusMarker=L.marker(CAMPUS,{icon:campusIcon(),zIndexOffset:1000,interactive:false}).addTo(map);
       map.on("popupopen",e=>{const el=e.popup.getElement(),b=el&&el.querySelector("[data-open]");if(b)b.onclick=()=>openDetail(+b.dataset.open)});
     }
     map.invalidateSize();
+    restyleMap();
     campusMarker.setIcon(campusIcon());
     pins.clearLayers();
     list.forEach(s=>L.marker(s.ll,{icon:pinIcon(s),title:s.n}).bindPopup(()=>popupHTML(s),{maxWidth:270,minWidth:210,autoPanPadding:[16,24]}).addTo(pins));
@@ -1012,7 +1040,7 @@ function updateMap(list){
   }).catch(()=>{if(st.view==="map")$("map").innerHTML=`<div class="empty">${T("mapOffline")}</div>`});
 }
 const PALS=[["milk", "奶茶", 0, "#F6EFE6", "#3A2A1E", "#8A5A2B"], ["sakura", "櫻花粉", 0, "#FBEFF1", "#3B1F2A", "#C2386B"], ["ocean", "海洋藍", 0, "#EDF3F9", "#12263A", "#1F5FA8"], ["lemon", "檸檬黃", 0, "#FBF7E4", "#2B2A14", "#8A6D00"], ["lav", "薰衣草", 0, "#F3F0FA", "#231B3A", "#6B46C1"], ["coral", "珊瑚橘", 0, "#FFF1EA", "#3A1E12", "#C2410C"], ["mono", "石墨灰", 0, "#F2F2F2", "#1A1A1A", "#2B2B2B"], ["night", "午夜藍", 1, "#0B1220", "#E4ECF8", "#6AA8FF"], ["cafe", "咖啡深棕", 1, "#17110C", "#F1E6D8", "#E0A25A"], ["violet", "紫夜", 1, "#14101F", "#EBE6F8", "#B592FF"], ["black", "純黑", 1, "#000000", "#EDEDED", "#FFD166"], ["forest", "森林墨綠", 1, "#0C1710", "#E3F1E6", "#7ED38F"], ["rose", "玫瑰暗紅", 1, "#1C0F14", "#F7E6EB", "#FF8FAB"]];
-function setPal(k){const r=document.documentElement;if(k)r.setAttribute("data-pal",k);else r.removeAttribute("data-pal");try{k?localStorage.setItem("pal",k):localStorage.removeItem("pal")}catch(e){}}
+function setPal(k){const r=document.documentElement;if(k)r.setAttribute("data-pal",k);else r.removeAttribute("data-pal");if(typeof restyleMap==="function")restyleMap();try{k?localStorage.setItem("pal",k):localStorage.removeItem("pal")}catch(e){}}
 try{const k=localStorage.getItem("pal");if(k&&PALS.some(p=>p[0]===k))setPal(k)}catch(e){}
 function openPal(btn){
   lastBtn=btn;clearInterval(timer);const cur=document.documentElement.getAttribute("data-pal")||"";
@@ -1037,7 +1065,7 @@ $("langbtn").onclick=()=>{lang=lang==="en"?"zh":"en";try{localStorage.setItem("l
 applyLang();
 
 /* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
-const APP_VERSION="d0a644573e";
+const APP_VERSION="4f4ecbcf79";
 function showUpdate(){
   if(document.getElementById("upd"))return;
   const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");
