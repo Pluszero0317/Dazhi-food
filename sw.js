@@ -1,7 +1,7 @@
 /* 離線快取。頁面（index.html）一律「先連網取最新版、連不上才用快取」，所以不會卡在舊版。 */
-const CACHE = "dazhi-static-v1";
+const CACHE = "dazhi-static-v2";
 const INDEX = new URL("index.html", self.registration.scope).href;
-const PRECACHE = ["index.html", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
+const PRECACHE = ["index.html", "manifest.webmanifest", "favicon-48.png", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(
