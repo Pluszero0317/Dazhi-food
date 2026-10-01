@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#F1F4F0">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>實踐大直吃喝地圖</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -108,11 +107,34 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
   .card{padding:16px}
 }
 @media (min-width:1000px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+:root[data-pal="milk"]{--bg:#F6EFE6;--surface:#FFFBF5;--fg:#3A2A1E;--muted:#75624F;--line:#E3D6C4;--accent:#8A5A2B;--accent-ink:#FFFFFF;--price:#B23A1E;--ok:#2F7D4F;--off:#8A6A1F;--chip:#EADFCF;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="sakura"]{--bg:#FBEFF1;--surface:#FFFFFF;--fg:#3B1F2A;--muted:#7A5663;--line:#EBD2D9;--accent:#C2386B;--accent-ink:#FFFFFF;--price:#B3361F;--ok:#2F7D4F;--off:#8A6A1F;--chip:#F4DDE3;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="ocean"]{--bg:#EDF3F9;--surface:#FFFFFF;--fg:#12263A;--muted:#52677D;--line:#D0DCE8;--accent:#1F5FA8;--accent-ink:#FFFFFF;--price:#B8420F;--ok:#1F7A4D;--off:#8A6A1F;--chip:#DCE7F2;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="lemon"]{--bg:#FBF7E4;--surface:#FFFEF6;--fg:#2B2A14;--muted:#6B6A3E;--line:#E6E0B3;--accent:#8A6D00;--accent-ink:#FFFFFF;--price:#B8420F;--ok:#3A7D2F;--off:#8A6A1F;--chip:#F0EAC4;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="lav"]{--bg:#F3F0FA;--surface:#FFFFFF;--fg:#231B3A;--muted:#62597D;--line:#DDD6EE;--accent:#6B46C1;--accent-ink:#FFFFFF;--price:#B8420F;--ok:#2F7D4F;--off:#8A6A1F;--chip:#E6E0F5;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="coral"]{--bg:#FFF1EA;--surface:#FFFFFF;--fg:#3A1E12;--muted:#7A5646;--line:#F0D5C8;--accent:#C2410C;--accent-ink:#FFFFFF;--price:#9A3412;--ok:#2F7D4F;--off:#8A6A1F;--chip:#F8E0D4;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="mono"]{--bg:#F2F2F2;--surface:#FFFFFF;--fg:#1A1A1A;--muted:#606060;--line:#D9D9D9;--accent:#2B2B2B;--accent-ink:#FFFFFF;--price:#B8420F;--ok:#2F7D4F;--off:#8A6A1F;--chip:#E6E6E6;--shade:rgba(0,0,0,0.4);color-scheme:light}
+:root[data-pal="night"]{--bg:#0B1220;--surface:#131C2E;--fg:#E4ECF8;--muted:#94A3BC;--line:#243049;--accent:#6AA8FF;--accent-ink:#07162E;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#1B2740;--shade:rgba(0,0,0,0.6);color-scheme:dark}
+:root[data-pal="cafe"]{--bg:#17110C;--surface:#221A13;--fg:#F1E6D8;--muted:#B19E88;--line:#3A2D22;--accent:#E0A25A;--accent-ink:#2A1707;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#2E231A;--shade:rgba(0,0,0,0.6);color-scheme:dark}
+:root[data-pal="violet"]{--bg:#14101F;--surface:#1E1830;--fg:#EBE6F8;--muted:#A59BC4;--line:#31294A;--accent:#B592FF;--accent-ink:#1A0F36;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#272040;--shade:rgba(0,0,0,0.6);color-scheme:dark}
+:root[data-pal="black"]{--bg:#000000;--surface:#0E0E0E;--fg:#EDEDED;--muted:#9A9A9A;--line:#262626;--accent:#FFD166;--accent-ink:#1A1200;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#1A1A1A;--shade:rgba(0,0,0,0.6);color-scheme:dark}
+:root[data-pal="forest"]{--bg:#0C1710;--surface:#14231A;--fg:#E3F1E6;--muted:#93AE9B;--line:#25392B;--accent:#7ED38F;--accent-ink:#08210F;--price:#F2A06A;--ok:#7ED38F;--off:#E0B45A;--chip:#1D3324;--shade:rgba(0,0,0,0.6);color-scheme:dark}
+:root[data-pal="rose"]{--bg:#1C0F14;--surface:#2A1720;--fg:#F7E6EB;--muted:#BE9AA7;--line:#43232F;--accent:#FF8FAB;--accent-ink:#3A0A1A;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#3A1E29;--shade:rgba(0,0,0,0.6);color-scheme:dark}
+header.top .wrap{position:relative}.eyebrow{padding-right:84px}
+.palbtn{position:absolute;right:16px;top:0;font:inherit;font-size:13px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:flex;align-items:center;gap:6px}
+.palbtn i{width:14px;height:14px;border-radius:50%;background:var(--accent);display:inline-block}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.pgrid h3{grid-column:1/3;margin:6px 0 0;font-size:12px;letter-spacing:.12em;color:var(--muted)}
+.pgrid button{font:inherit;font-weight:700;min-height:48px;border-radius:10px;cursor:pointer;border:2px solid var(--line);display:flex;align-items:center;gap:8px;padding:6px 10px;text-align:left}
+.pgrid button[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.pgrid button i{width:22px;height:22px;border-radius:50%;flex:none;border:2px solid currentColor}
+.palt{font-family:var(--serif);font-weight:900;font-size:20px;margin:0}
 </style>
 </head>
 <body>
 
 <header class="top"><div class="wrap">
+  <button class="palbtn" id="palbtn" type="button" aria-haspopup="dialog"><i></i>配色</button>
   <div class="eyebrow">SHIH CHIEN UNIVERSITY · 大直街 70 號</div>
   <h1>實踐大直吃喝地圖</h1>
   <p class="lede">校門口往外步行約 15 分鐘內的餐廳和手搖飲。點進店家看完整菜單，選不出來就按下方的隨機按鈕。</p>
@@ -144,7 +166,7 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
   <p>外送平台的價格常比店內高，所以這裡引用平台價的店（50嵐、薛丁格的貓、五桐號）已在卡片上註明。</p>
 </div></footer>
 
-<div class="fabs"><button class="fab" id="rand-food" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span>隨機吃一家</span></button><button class="fab" id="rand-drink" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span>隨機喝一家</span></button></div>
+<div class="fabs"><button class="fab" id="rand-food" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span id="rf-l">隨機吃一家</span></button><button class="fab" id="rand-drink" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span>隨機喝一家</span></button></div>
 <div class="detail" id="detail" role="dialog" aria-modal="true" hidden></div>
 <div class="shade" id="shade" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="隨機挑選結果" hidden></div>
@@ -672,7 +694,8 @@ document.addEventListener("keydown",e=>{const c=e.target.closest&&e.target.close
   if(e.key==="Escape"){if(!detail.hidden)closeDetail();else if(!sheet.hidden)closeSheet()}});
 
 let current=[];
-function render(){
+function rlabel(){$("rf-l").textContent=(st.cat==="food"&&st.ty!=="全部")?"隨機吃一家・"+st.ty:"隨機吃一家"}
+function render(){rlabel();
   const q=$("q").value.trim().toLowerCase(),now=taipeiNow();
   let list=D.filter(s=>{
     if(st.cat==="drink"?!s.drink:s.drink)return false;
@@ -694,7 +717,8 @@ let lastBtn=null,pickKind="food";
 function closeSheet(keep){clearInterval(timer);sheet.hidden=true;shade.hidden=true;if(!keep&&lastBtn)lastBtn.focus()}
 function pickOne(kind){
   kind=kind||pickKind;pickKind=kind;
-  const pool=D.filter(s=>kind==="drink"?s.drink:!s.drink);
+  const ft=(kind==="food"&&st.cat==="food")?st.ty:"全部";
+  const pool=D.filter(s=>kind==="drink"?s.drink:(!s.drink&&(ft==="全部"||s.ty===ft)));
   clearInterval(timer);
   if(!pool.length){sheet.innerHTML=`<div class="pick">目前沒有符合條件的店</div><div class="acts"><button type="button" id="sc" style="grid-column:1/3">關閉</button></div>`;$("sc").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;return}
   const final=pool[Math.floor(Math.random()*pool.length)];
@@ -707,6 +731,18 @@ function pickOne(kind){
   let n=0;timer=setInterval(()=>{n++;$("pk").textContent=pool[Math.floor(Math.random()*pool.length)].n;if(n>=12){clearInterval(timer);show()}},70);
 }
 $("rand-food").onclick=e=>{lastBtn=e.currentTarget;pickOne("food")};$("rand-drink").onclick=e=>{lastBtn=e.currentTarget;pickOne("drink")};shade.onclick=()=>closeSheet();
+
+const PALS=[["milk", "奶茶", 0, "#F6EFE6", "#3A2A1E", "#8A5A2B"], ["sakura", "櫻花粉", 0, "#FBEFF1", "#3B1F2A", "#C2386B"], ["ocean", "海洋藍", 0, "#EDF3F9", "#12263A", "#1F5FA8"], ["lemon", "檸檬黃", 0, "#FBF7E4", "#2B2A14", "#8A6D00"], ["lav", "薰衣草", 0, "#F3F0FA", "#231B3A", "#6B46C1"], ["coral", "珊瑚橘", 0, "#FFF1EA", "#3A1E12", "#C2410C"], ["mono", "石墨灰", 0, "#F2F2F2", "#1A1A1A", "#2B2B2B"], ["night", "午夜藍", 1, "#0B1220", "#E4ECF8", "#6AA8FF"], ["cafe", "咖啡深棕", 1, "#17110C", "#F1E6D8", "#E0A25A"], ["violet", "紫夜", 1, "#14101F", "#EBE6F8", "#B592FF"], ["black", "純黑", 1, "#000000", "#EDEDED", "#FFD166"], ["forest", "森林墨綠", 1, "#0C1710", "#E3F1E6", "#7ED38F"], ["rose", "玫瑰暗紅", 1, "#1C0F14", "#F7E6EB", "#FF8FAB"]];
+function setPal(k){const r=document.documentElement;if(k)r.setAttribute("data-pal",k);else r.removeAttribute("data-pal");try{k?localStorage.setItem("pal",k):localStorage.removeItem("pal")}catch(e){}}
+try{const k=localStorage.getItem("pal");if(k&&PALS.some(p=>p[0]===k))setPal(k)}catch(e){}
+function openPal(btn){
+  lastBtn=btn;clearInterval(timer);const cur=document.documentElement.getAttribute("data-pal")||"";
+  const mk=(k,l,bg,fg,ac)=>`<button type="button" data-k="${k}" aria-pressed="${cur===k}" style="background:${bg};color:${fg}"><i style="background:${ac}"></i>${l}</button>`;
+  sheet.innerHTML=`<p class="palt">選配色</p><div class="pgrid"><button type="button" data-k="" aria-pressed="${cur===""}" style="background:var(--surface);color:var(--fg);grid-column:1/3"><i style="background:var(--accent)"></i>預設（跟隨手機深淺色）</button><h3>淺色</h3>${PALS.filter(p=>!p[2]).map(p=>mk(p[0],p[1],p[3],p[4],p[5])).join("")}<h3>深色</h3>${PALS.filter(p=>p[2]).map(p=>mk(p[0],p[1],p[3],p[4],p[5])).join("")}</div><div class="acts"><button type="button" class="go" id="pdone" style="grid-column:1/3">完成</button></div>`;
+  sheet.querySelectorAll(".pgrid button").forEach(b=>b.onclick=()=>{setPal(b.dataset.k);sheet.querySelectorAll(".pgrid button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+  $("pdone").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;
+}
+$("palbtn").onclick=e=>openPal(e.currentTarget);
 render();
 </script>
 
