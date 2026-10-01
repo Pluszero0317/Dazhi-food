@@ -1,5 +1,5 @@
 /* 離線快取。頁面（index.html）一律「先連網取最新版、連不上才用快取」，所以不會卡在舊版。 */
-const CACHE = "dazhi-static-v3";
+const CACHE = "dazhi-static-v4";
 const INDEX = new URL("index.html", self.registration.scope).href;
 const PRECACHE = ["index.html", "manifest.webmanifest", "favicon-48.png", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
@@ -64,5 +64,5 @@ self.addEventListener("fetch", e => {
     e.respondWith(staleWhileRevalidate(req));
     return;
   }
-  if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com" || url.hostname === "unpkg.com") e.respondWith(cacheFirst(req));
+  if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") e.respondWith(cacheFirst(req));
 });

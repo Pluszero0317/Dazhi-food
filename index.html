@@ -67,28 +67,6 @@ select{flex:0 0 auto;max-width:44%}
 .rmsg{font-size:13px;color:var(--muted);min-height:1.4em;margin-top:8px}
 .upd{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));z-index:20;background:var(--fg);color:var(--bg);border-radius:12px;padding:10px 12px 10px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,.28);font-size:14px;max-width:560px;margin-inline:auto}
 .upd button{font:inherit;font-weight:700;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;flex:none}
-.grid[hidden],#map[hidden]{display:none}
-body.mapmode .fabs{display:none}
-#map{height:420px;margin-bottom:60px;border:1px solid var(--line);border-radius:8px;position:relative;z-index:0;isolation:isolate;background:var(--chip)}
-#map .empty{padding:40px 16px}
-#map.leaflet-container{font:inherit}
-#map .leaflet-popup-content-wrapper{background:var(--surface);color:var(--fg);border-radius:10px}
-#map .leaflet-popup-tip{background:var(--surface)}
-#map .leaflet-popup-content{margin:12px 14px;font-size:14px;line-height:1.5}
-#map .leaflet-popup-close-button{width:32px;height:32px;font-size:22px;line-height:30px;color:var(--muted)}
-.mp b{font-family:var(--serif);font-size:16px;display:block;padding-right:18px}
-.mp .tag{margin:2px 0}
-.mp ul.menu{margin:8px 0}
-.mp ul.menu li{font-size:13px}
-.mp .badges{margin:6px 0 4px}
-.mpa{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px}
-.mpbtn{font:inherit;font-size:14px;font-weight:700;min-height:36px;padding:0 12px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer}
-.pin{background:none;border:0}
-.pin i{position:absolute;left:0;top:0;width:24px;height:24px;background:var(--accent);border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.45)}
-.pin i::after{content:"";position:absolute;left:5px;top:5px;width:8px;height:8px;border-radius:50%;background:#fff}
-.pin.drink i{background:var(--price)}
-.campus{background:none;border:0}
-.campus span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:var(--fg);color:var(--bg);font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.4);border:2px solid #fff}
 .zhn{color:var(--muted);font-size:.82em}
 .range.hrs{white-space:nowrap}.range.hrs,.range.na{text-align:right;line-height:1.4}.range.na{color:var(--muted);font-family:var(--sans);font-weight:400;font-size:12px;max-width:6.5em}
 .range{font-family:var(--mono);font-weight:600;color:var(--price);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -194,13 +172,12 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
     </select>
   </div>
   <div class="row scroll" id="types" role="group" aria-label="類型"></div>
-  <div class="row scroll"><button class="chip line" id="openNow" aria-pressed="false" data-l="openNow">現在營業中</button><button class="chip line" id="favOnly" aria-pressed="false" data-l="favOnly">只看收藏</button><button class="chip line" id="mapView" aria-pressed="false" data-l="mapView">地圖檢視</button></div>
+  <div class="row scroll"><button class="chip line" id="openNow" aria-pressed="false" data-l="openNow">現在營業中</button><button class="chip line" id="favOnly" aria-pressed="false" data-l="favOnly">只看收藏</button></div>
 </div></div>
 
 <main class="wrap">
   <div class="count" id="count" aria-live="polite"></div>
   <div class="grid" id="grid"></div>
-  <div id="map" hidden role="application"></div>
 </main>
 
 <footer><div class="wrap">
@@ -671,7 +648,6 @@ zh:{
   empty:"沒有符合的店。換個關鍵字或類型試試。",noPool:"目前沒有符合條件的店",
   close:"關閉",again:"再抽一次",eat:"就吃這家",
   palTitle:"選配色",palDefault:"預設（跟隨手機深淺色）",light:"淺色",dark:"深色",done:"完成",
-  mapView:"地圖檢視",campus:"校門口",mapOffline:"地圖需要網路連線才能載入。",mapAria:"店家地圖",
   lastUpd:"最後更新："+LAST_UPDATED,updMsg:"有新版本可用",updBtn:"立即更新",
   fav:"♡ 收藏",faved:"♥ 已收藏",favOnly:"只看收藏",emptyFav:"還沒有收藏的店。點卡片上的「♡ 收藏」就能加入。",
   report:"回報錯誤",repTitle:"回報錯誤",repTypes:["價格不對","營業時間不對","已歇業","菜單缺漏","其他"],repDesc:"說明（例如：哪一項、正確的價格或時間）",
@@ -696,7 +672,6 @@ en:{
   empty:"No matches. Try another keyword or type.",noPool:"No places match right now",
   close:"Close",again:"Pick again",eat:"Eat here",
   palTitle:"Choose a theme",palDefault:"Default (follow device)",light:"Light",dark:"Dark",done:"Done",
-  mapView:"Map view",campus:"Campus gate",mapOffline:"The map needs an internet connection to load.",mapAria:"Map of shops",
   lastUpd:"Last updated: "+LAST_UPDATED+" (Taipei time)",updMsg:"A new version is available",updBtn:"Update",
   fav:"♡ Save",faved:"♥ Saved",favOnly:"Saved only",emptyFav:"No saved places yet. Tap “♡ Save” on a card to add one.",
   report:"Report a problem",repTitle:"Report a problem",repTypes:["Wrong price","Wrong hours","Closed down","Menu missing items","Other"],repDesc:"Details (e.g. which item, the correct price or hours)",
@@ -826,7 +801,7 @@ D.forEach((s,i)=>{
   s.min=s.all.length?Math.min(...s.all.map(x=>x.min)):null;s.max=s.all.length?Math.max(...s.all.map(x=>x.max)):null;
   s.top=s.hl?parseList(s.hl):s.all.slice(0,3);
 });
-const st={cat:"food",ty:"全部",open:false,fav:false,view:"list"};
+const st={cat:"food",ty:"全部",open:false,fav:false};
 let favs=new Set();
 try{const a=JSON.parse(localStorage.getItem("favs")||"[]");if(Array.isArray(a))favs=new Set(a)}catch(e){}
 const favBtn=s=>`<button type="button" class="fav" data-fav="${esc(s.n)}" aria-pressed="${favs.has(s.n)}">${favs.has(s.n)?T("faved"):T("fav")}</button>`;
@@ -840,7 +815,6 @@ $("cat").querySelectorAll("button").forEach(b=>b.onclick=()=>{st.cat=b.dataset.c
   $("cat").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
   setPh();buildTypes();render()});
 $("openNow").onclick=e=>{st.open=!st.open;e.currentTarget.setAttribute("aria-pressed",String(st.open));render()};
-$("mapView").onclick=e=>{st.view=st.view==="map"?"list":"map";e.currentTarget.setAttribute("aria-pressed",String(st.view==="map"));render()};
 $("favOnly").onclick=e=>{st.fav=!st.fav;e.currentTarget.setAttribute("aria-pressed",String(st.fav));render()};
 $("q").oninput=render;$("sort").onchange=render;
 
@@ -911,7 +885,6 @@ function render(){rlabel();
   current=list;
   const tot=D.filter(s=>st.cat==="drink"?s.drink:!s.drink).length;
   $("count").textContent=T("count")(list.length,tot,st.cat==="drink",st.open);
-  showView(list);
   $("grid").innerHTML=list.length?list.map(s=>cardHTML(s,now,q)).join(""):`<div class="empty">${st.fav&&!favs.size?T("emptyFav"):T("empty")}</div>`;
 }
 
@@ -966,64 +939,6 @@ function openReport(s,btn){
     $("rtext").value=body;msg.textContent=T("repDone");
   };
 }
-/* 地圖檢視：打開時才載入 Leaflet（含完整性雜湊），底圖為 OpenStreetMap */
-const LEAFLET_CSS="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",LEAFLET_JS="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-let leafletP=null,map=null,pins=null,campusMarker=null,mapSig="";
-function loadLeaflet(){
-  if(window.L)return Promise.resolve();
-  if(leafletP)return leafletP;
-  leafletP=new Promise((res,rej)=>{
-    const css=document.createElement("link");css.rel="stylesheet";css.href=LEAFLET_CSS;css.integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";css.crossOrigin="";document.head.appendChild(css);
-    const sc=document.createElement("script");sc.src=LEAFLET_JS;sc.integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";sc.crossOrigin="";
-    sc.onload=()=>res();sc.onerror=()=>{leafletP=null;sc.remove();rej(new Error("leaflet"))};document.head.appendChild(sc);
-  });
-  return leafletP;
-}
-function todayText(s,now){
-  if(!s.h)return T("hoursNA");
-  if(s.off&&s.off.includes(now.day))return T("offToday");
-  return ((s.hd&&s.hd[now.day])||s.h).split(",").map(r=>r.replace("-","–")).join(" / ");
-}
-function popupHTML(s){
-  const now=taipeiNow();
-  return `<div class="mp"><b>${esc(s.n)}</b><div class="tag">${esc(tyL(s.ty))}${SEP()}${esc(descOf(s))}</div><div class="tag">${esc(todayText(s,now))}</div><div class="badges"><span class="b walk">${T("walk")(s.w)}</span>${badgeOf(s,now)}${s.part?`<span class="b">${T("partial")}</span>`:""}</div>${s.top.length?`<ul class="menu">${s.top.map(x=>li(x,"")).join("")}</ul>`:""}<div class="mpa"><button type="button" class="mpbtn" data-open="${s.id}">${s.all.length?T("more")(s.all.length):T("moreInfo")}</button>${favBtn(s)}</div></div>`;
-}
-function pinIcon(s){return L.divIcon({className:"pin"+(s.drink?" drink":""),html:"<i></i>",iconSize:[30,38],iconAnchor:[15,37],popupAnchor:[0,-34]})}
-function campusIcon(){return L.divIcon({className:"campus",html:`<span>${esc(T("campus"))}</span>`,iconSize:[0,0]})}
-let wasMap=false;
-function fitMapBox(){$("map").style.height=Math.max(300,innerHeight-document.querySelector(".bar").offsetHeight-16)+"px"}
-function showView(list){
-  const m=st.view==="map";
-  $("grid").hidden=m;$("map").hidden=!m;document.body.classList.toggle("mapmode",m);
-  if(m){
-    fitMapBox();
-    if(!wasMap)window.scrollTo(0,scrollY+$("map").getBoundingClientRect().top-document.querySelector(".bar").offsetHeight-8);
-    updateMap(list);
-  }
-  wasMap=m;
-}
-window.addEventListener("resize",()=>{if(st.view==="map"){fitMapBox();if(map)map.invalidateSize()}});
-function updateMap(list){
-  loadLeaflet().then(()=>{
-    if(st.view!=="map")return;
-    const box=$("map");
-    if(!map){
-      box.innerHTML="";
-      map=L.map(box).setView(CAMPUS,17);
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
-      L.circle(CAMPUS,{radius:865,color:"#0E6B5A",weight:1.5,dashArray:"6 6",fill:false,interactive:false}).addTo(map);
-      pins=L.layerGroup().addTo(map);
-      campusMarker=L.marker(CAMPUS,{icon:campusIcon(),zIndexOffset:1000,interactive:false}).addTo(map);
-      map.on("popupopen",e=>{const el=e.popup.getElement(),b=el&&el.querySelector("[data-open]");if(b)b.onclick=()=>openDetail(+b.dataset.open)});
-    }
-    map.invalidateSize();
-    campusMarker.setIcon(campusIcon());
-    pins.clearLayers();
-    list.forEach(s=>L.marker(s.ll,{icon:pinIcon(s),title:s.n}).bindPopup(()=>popupHTML(s),{maxWidth:270,minWidth:210,autoPanPadding:[16,24]}).addTo(pins));
-    const sig=list.map(s=>s.id).join(",");
-    if(sig!==mapSig){mapSig=sig;map.fitBounds(L.latLngBounds(list.map(s=>s.ll).concat([CAMPUS])),{padding:[28,28],maxZoom:18})}
-  }).catch(()=>{if(st.view==="map")$("map").innerHTML=`<div class="empty">${T("mapOffline")}</div>`});
-}
 const PALS=[["milk", "奶茶", 0, "#F6EFE6", "#3A2A1E", "#8A5A2B"], ["sakura", "櫻花粉", 0, "#FBEFF1", "#3B1F2A", "#C2386B"], ["ocean", "海洋藍", 0, "#EDF3F9", "#12263A", "#1F5FA8"], ["lemon", "檸檬黃", 0, "#FBF7E4", "#2B2A14", "#8A6D00"], ["lav", "薰衣草", 0, "#F3F0FA", "#231B3A", "#6B46C1"], ["coral", "珊瑚橘", 0, "#FFF1EA", "#3A1E12", "#C2410C"], ["mono", "石墨灰", 0, "#F2F2F2", "#1A1A1A", "#2B2B2B"], ["night", "午夜藍", 1, "#0B1220", "#E4ECF8", "#6AA8FF"], ["cafe", "咖啡深棕", 1, "#17110C", "#F1E6D8", "#E0A25A"], ["violet", "紫夜", 1, "#14101F", "#EBE6F8", "#B592FF"], ["black", "純黑", 1, "#000000", "#EDEDED", "#FFD166"], ["forest", "森林墨綠", 1, "#0C1710", "#E3F1E6", "#7ED38F"], ["rose", "玫瑰暗紅", 1, "#1C0F14", "#F7E6EB", "#FF8FAB"]];
 function setPal(k){const r=document.documentElement;if(k)r.setAttribute("data-pal",k);else r.removeAttribute("data-pal");try{k?localStorage.setItem("pal",k):localStorage.removeItem("pal")}catch(e){}}
 try{const k=localStorage.getItem("pal");if(k&&PALS.some(p=>p[0]===k))setPal(k)}catch(e){}
@@ -1042,7 +957,7 @@ function applyLang(){
   document.querySelectorAll("[data-lh]").forEach(e=>{e.innerHTML=T(e.dataset.lh)});
   const lb=$("langbtn");lb.textContent=T("langBtn");lb.setAttribute("aria-label",T("langAria"));
   $("cat").setAttribute("aria-label",T("catAria"));$("types").setAttribute("aria-label",T("typeAria"));$("sort").setAttribute("aria-label",T("sortAria"));
-  sheet.setAttribute("aria-label",T("sheetAria"));$("map").setAttribute("aria-label",T("mapAria"));
+  sheet.setAttribute("aria-label",T("sheetAria"));
   $("rand-drink").querySelector("span").textContent=T("randDrink");
   setPh();buildTypes();render();
 }
@@ -1050,7 +965,7 @@ $("langbtn").onclick=()=>{lang=lang==="en"?"zh":"en";try{localStorage.setItem("l
 applyLang();
 
 /* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
-const APP_VERSION="6be1ccf06d";
+const APP_VERSION="cde2c46b92";
 function showUpdate(){
   if(document.getElementById("upd"))return;
   const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");
