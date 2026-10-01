@@ -72,6 +72,7 @@ footer{border-top:1px solid var(--line);padding-block:20px 120px;color:var(--mut
 footer p{margin:0 0 8px;max-width:75ch}
 footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .fabs{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;justify-content:center;gap:10px;padding:0 16px;pointer-events:none}.fab{pointer-events:auto;display:flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:16px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:0 24px;min-height:52px;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}
+.fab{min-width:0}.fab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:420px){.fab{padding:0 16px;gap:6px;font-size:15px}.fab svg{width:20px;height:20px}}
 .fab svg{width:22px;height:22px}.fab#rand-drink{background:var(--fg);color:var(--bg)}
 .shade{position:fixed;inset:0;background:var(--shade);z-index:8}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--bg);border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:88%;overflow-y:auto;max-width:560px;margin-inline:auto}
@@ -120,8 +121,8 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
 :root[data-pal="black"]{--bg:#000000;--surface:#0E0E0E;--fg:#EDEDED;--muted:#9A9A9A;--line:#262626;--accent:#FFD166;--accent-ink:#1A1200;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#1A1A1A;--shade:rgba(0,0,0,0.6);color-scheme:dark}
 :root[data-pal="forest"]{--bg:#0C1710;--surface:#14231A;--fg:#E3F1E6;--muted:#93AE9B;--line:#25392B;--accent:#7ED38F;--accent-ink:#08210F;--price:#F2A06A;--ok:#7ED38F;--off:#E0B45A;--chip:#1D3324;--shade:rgba(0,0,0,0.6);color-scheme:dark}
 :root[data-pal="rose"]{--bg:#1C0F14;--surface:#2A1720;--fg:#F7E6EB;--muted:#BE9AA7;--line:#43232F;--accent:#FF8FAB;--accent-ink:#3A0A1A;--price:#F2A06A;--ok:#5ED19A;--off:#E0B45A;--chip:#3A1E29;--shade:rgba(0,0,0,0.6);color-scheme:dark}
-header.top .wrap{position:relative}h1{padding-right:84px}
-.palbtn{position:absolute;right:16px;top:0;font:inherit;font-size:13px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:flex;align-items:center;gap:6px}
+.tools{display:flex;justify-content:flex-end;gap:8px;margin-bottom:6px}
+.palbtn{font:inherit;font-size:13px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:flex;align-items:center;gap:6px}
 .palbtn i{width:14px;height:14px;border-radius:50%;background:var(--accent);display:inline-block}
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
 .pgrid h3{grid-column:1/3;margin:6px 0 0;font-size:12px;letter-spacing:.12em;color:var(--muted)}
@@ -134,24 +135,24 @@ header.top .wrap{position:relative}h1{padding-right:84px}
 <body>
 
 <header class="top"><div class="wrap">
-  <button class="palbtn" id="palbtn" type="button" aria-haspopup="dialog"><i></i>配色</button>
-  <h1>實踐大直吃喝地圖</h1>
-  <p class="lede">校門口往外步行約 15 分鐘內的餐廳和手搖飲。點進店家看完整菜單，選不出來就按下方的隨機按鈕。</p>
+  <div class="tools"><button class="palbtn" id="langbtn" type="button">EN</button><button class="palbtn" id="palbtn" type="button" aria-haspopup="dialog"><i></i><span data-l="pal">配色</span></button></div>
+  <h1 data-l="title">實踐大直吃喝地圖</h1>
+  <p class="lede" data-l="lede">校門口往外步行約 15 分鐘內的餐廳和手搖飲。點進店家看完整菜單，選不出來就按下方的隨機按鈕。</p>
 </div></header>
 
 <div class="bar"><div class="wrap">
-  <div class="seg" id="cat" role="group" aria-label="大類"><button type="button" data-c="food" aria-pressed="true">食物</button><button type="button" data-c="drink" aria-pressed="false">手搖飲</button></div>
+  <div class="seg" id="cat" role="group" aria-label="大類"><button type="button" data-c="food" aria-pressed="true" data-l="food">食物</button><button type="button" data-c="drink" aria-pressed="false" data-l="drinkTab">手搖飲</button></div>
   <div class="row">
     <input type="search" id="q" placeholder="搜尋店名或品項" aria-label="搜尋店名或品項" enterkeyhint="search">
     <select id="sort" aria-label="排序">
-      <option value="walk">距離近到遠</option>
-      <option value="pasc">價格低到高</option>
-      <option value="pdesc">價格高到低</option>
-      <option value="name">店名</option>
+      <option value="walk" data-l="sortWalk">距離近到遠</option>
+      <option value="pasc" data-l="sortPasc">價格低到高</option>
+      <option value="pdesc" data-l="sortPdesc">價格高到低</option>
+      <option value="name" data-l="sortName">店名</option>
     </select>
   </div>
   <div class="row scroll" id="types" role="group" aria-label="類型"></div>
-  <div class="row scroll"><button class="chip line" id="openNow" aria-pressed="false">現在營業中</button></div>
+  <div class="row scroll"><button class="chip line" id="openNow" aria-pressed="false" data-l="openNow">現在營業中</button></div>
 </div></div>
 
 <main class="wrap">
@@ -160,7 +161,7 @@ header.top .wrap{position:relative}h1{padding-right:84px}
 </main>
 
 <footer><div class="wrap">
-  <p>網站如果有問題，或是有任何想法與建議，歡迎透過 IG 聯絡我：<a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a></p>
+  <p data-lh="footer">網站如果有問題，或是有任何想法與建議，歡迎透過 IG 聯絡我：<a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a></p>
 </div></footer>
 
 <div class="fabs"><button class="fab" id="rand-food" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span id="rf-l">隨機吃一家</span></button><button class="fab" id="rand-drink" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg><span>隨機喝一家</span></button></div>
@@ -595,6 +596,146 @@ const D=[
 ];
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
+/* 語言（中文／English）：介面、類型與店家簡述有英文；菜單品項與店名維持原文 */
+let lang="zh";
+try{const v=localStorage.getItem("lang");if(v==="en"||v==="zh")lang=v}catch(e){}
+const TYPE_EN={"全部":"All","麵食":"Noodles","飯・簡餐":"Rice & set meals","小吃・早餐":"Snacks & breakfast","速食":"Fast food","義式・西餐":"Western & Italian","日韓・異國":"Japanese, Korean & more","火鍋":"Hot pot","咖啡・甜點":"Cafés & desserts","豆花・冰品":"Tofu pudding & ice","手搖飲":"Bubble tea"};
+const PAL_EN={milk:"Milk tea",sakura:"Sakura",ocean:"Ocean",lemon:"Lemon",lav:"Lavender",coral:"Coral",mono:"Graphite",night:"Midnight",cafe:"Coffee",violet:"Violet night",black:"Pure black",forest:"Forest",rose:"Rose"};
+const DNE=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const I={
+zh:{
+  title:"實踐大直吃喝地圖",
+  lede:"校門口往外步行約 15 分鐘內的餐廳和手搖飲。點進店家看完整菜單，選不出來就按下方的隨機按鈕。",
+  pal:"配色",food:"食物",drinkTab:"手搖飲",
+  sortWalk:"距離近到遠",sortPasc:"價格低到高",sortPdesc:"價格高到低",sortName:"店名",
+  openNow:"現在營業中",
+  footer:`網站如果有問題，或是有任何想法與建議，歡迎透過 IG 聯絡我：<a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a>`,
+  randFood:"隨機吃一家",randDrink:"隨機喝一家",
+  ph:"搜尋店名或品項",phAria:"搜尋店名或品項",langBtn:"EN",langAria:"切換成英文",
+  catAria:"大類",typeAria:"類型",sortAria:"排序",sheetAria:"隨機挑選結果",
+  open:"營業中",closed:"休息中",noHours:"營業時間請看 Google 地圖",
+  walk:n=>`步行約 ${n} 分`,partial:"非完整菜單",gv:"Google 地圖已核對",openMap:"開地圖",
+  back:"‹ 返回",src:n=>`共 ${n} 項・來源：`,more:n=>`看完整菜單・${n} 項`,view:n=>`查看${n}完整菜單`,
+  hit:(q,n)=>`符合「${q}」的品項${n>3?`（共 ${n} 項）`:""}`,
+  count:(n,tot,drink,open)=>`共 ${n} 家（${drink?"手搖飲":"食物"}收錄 ${tot} 家）`+(open?"・未查到營業時段的店不會列入":""),
+  empty:"沒有符合的店。換個關鍵字或類型試試。",noPool:"目前沒有符合條件的店",
+  close:"關閉",again:"再抽一次",eat:"就吃這家",
+  palTitle:"選配色",palDefault:"預設（跟隨手機深淺色）",light:"淺色",dark:"深色",done:"完成",
+  hours:s=>{const D="日一二三四五六";return s.h?s.h.replace(/,/g," / ")+(s.hd?"；"+Object.entries(s.hd).map(([d,v])=>`週${D[d]} ${v.replace(/,/g," / ")}`).join("；"):"")+(s.off&&s.off.length?`，週${s.off.map(d=>D[d]).join("、")}公休`:""):"營業時間請看 Google 地圖"}
+},
+en:{
+  title:"Shih Chien Dazhi Food Map",
+  lede:"Restaurants and bubble tea shops within about a 15-minute walk of the campus gate. Tap a place to see its full menu, or use a random button if you can't decide. Menus are shown in the original Chinese.",
+  pal:"Theme",food:"Food",drinkTab:"Bubble tea",
+  sortWalk:"Nearest first",sortPasc:"Price: low to high",sortPdesc:"Price: high to low",sortName:"Name",
+  openNow:"Open now",
+  footer:`Found a problem or have an idea? Contact me on IG: <a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a>`,
+  randFood:"Random meal",randDrink:"Random drink",
+  ph:"Search…",phAria:"Search by shop or dish",langBtn:"中文",langAria:"Switch to Chinese",
+  catAria:"Category",typeAria:"Type",sortAria:"Sort",sheetAria:"Random pick",
+  open:"Open",closed:"Closed",noHours:"See Google Maps for hours",
+  walk:n=>`~${n} min walk`,partial:"Partial menu",gv:"Verified on Google Maps",openMap:"Open in Maps",
+  back:"‹ Back",src:n=>`${n} items · Source: `,more:n=>`Full menu · ${n} items`,view:n=>`View full menu of ${n}`,
+  hit:(q,n)=>`Items matching "${q}"${n>3?` (${n} total)`:""}`,
+  count:(n,tot,drink,open)=>`${n} places (${tot} ${drink?"bubble tea shops":"food places"} listed)`+(open?" · places without known hours are excluded":""),
+  empty:"No matches. Try another keyword or type.",noPool:"No places match right now",
+  close:"Close",again:"Pick again",eat:"Eat here",
+  palTitle:"Choose a theme",palDefault:"Default (follow device)",light:"Light",dark:"Dark",done:"Done",
+  hours:s=>s.h?s.h.replace(/,/g," / ")+(s.hd?"; "+Object.entries(s.hd).map(([d,v])=>`${DNE[d]} ${v.replace(/,/g," / ")}`).join("; "):"")+(s.off&&s.off.length?`, closed ${s.off.map(d=>DNE[d]).join(", ")}`:""):"See Google Maps for hours"
+}};
+const T=k=>I[lang][k];
+const tyL=k=>lang==="en"?(TYPE_EN[k]||k):k;
+const SEP=()=>lang==="en"?" · ":"・";
+const EN_T={
+"林文必涼麵":"Cold noodles, dry noodles, braised rice",
+"兄弟麵館":"Noodle shop, same price for any bowl size",
+"勝拉麵":"Japanese ramen",
+"麵屋技庵":"Beef bone-broth ramen, rice bowls",
+"PaPa Pasta":"Pasta, risotto",
+"FLOSSY":"Steak plates, risotto",
+"大明食堂":"Japanese set meals",
+"馬友友印度廚房":"Indian cuisine",
+"統生天霸王豬腳":"Braised pork rice, pork knuckle, Hakka dishes",
+"內行人鹹酥雞":"Fresh-fried Taiwanese popcorn chicken",
+"花花豆漿":"Shaobing & youtiao, egg crepes, soy milk",
+"若鄰紅茶":"Foam black tea, light meals",
+"A2H COFFEE TEA BEER":"No-time-limit café",
+"楊記鍋品（原大直三媽）":"Stinky hot pot, mini hot pot",
+"晴光豆花":"Tofu pudding",
+"愛弟豆花":"Tofu pudding (one price for all toppings)",
+"北極熊綿綿冰":"Shaved milk ice, soft serve",
+"伍佰之家":"Mung bean soup, bubble tea",
+"麻古茶坊 大直店":"Bubble tea, cheese-foam series",
+"CoCo 都可 大直店":"Bubble tea",
+"薛丁格的貓":"Bubble tea, fresh-milk tea",
+"50嵐 大直北安店":"Bubble tea",
+"迷客夏 大直店":"Fresh-milk tea, handmade specials",
+"五桐號 WooTEA 大直店":"Bubble tea, cream-cap series",
+"麥當勞 台北北安餐廳":"Burgers, meal sets, breakfast, snacks",
+"摩斯漢堡 實踐大學店":"Burgers, breakfast, MOS Café",
+"摩斯漢堡 北安店":"Burgers, breakfast, MOS Café",
+"BFLO 水牛城美式餐廳":"American diner, buffalo wings",
+"Subway 大直餐廳":"Subs, salads, breakfast",
+"花樂發-大直店":"Breakfast, egg & meat toast, egg crepes",
+"富貴村":"Breakfast, teppanyaki noodles, egg crepes",
+"金排骨快餐店":"Pork chop rice, curry rice",
+"新記南京板鴨":"Duck rice, lunch boxes",
+"轉角小麵店":"Yi mian noodles, braised pork rice, snacks",
+"美福心牛肉麵":"Beef noodle soup",
+"大直小館":"Hong Kong-style claypot rice, paper-wrapped chicken",
+"麥味登大直北安羅伯店":"Chain breakfast, egg crepes, burgers",
+"胖老爹美式炸雞 北安大直店":"American fried chicken, combo meals",
+"台灣鹽酥雞 大直創始總店":"Taiwanese popcorn chicken, fried snacks",
+"里歐帕朵•花豹吃披薩":"DIY-cut pizza, pasta and elephant-ear pork cutlet",
+"BirDining蔦飼料餐食料理":"Japanese rice bowls, udon, and karaage curry omelette rice",
+"蘭軒中國菜":"Yunnan-Thai-Taiwanese Chinese set meals and shared dishes",
+"頁小館":"Michelin-recommended Taiwanese-style international Western cooking",
+"亞米食坊":"Home-style set meals with soup, drink and rice",
+"揚屋大眾日式料理":"Affordable Japanese set meals with sides, miso soup and chawanmushi",
+"水剌韓式餐廳 大直總店":"Korean BBQ on copper plate, stone-pot bibimbap; free banchan refills",
+"518醉大直":"Izakaya on Beian Rd, bar snacks and late-night food",
+"那比餐坊":"Alley Italian bistro: pasta, risotto and steak plates",
+"La cuisine Bourgeoise 布爾喬亞":"French home-style set-menu bistro; mains include three starters and dessert",
+"8鍋臭臭鍋大直實踐店":"About 20 broths; pots come with sides and egg; self-serve rice, noodles, drinks and ice cream",
+"曉秋咖啡廳":"Alley European café with handmade dishes and desserts",
+"Always Day One Cafe":"House-roasted coffee, pudding and Basque cheesecake; no time limit",
+"特好喝 toptiertea 大直店":"Premium tea, rich milk tea and fresh-milk tea; high-quality tea bases",
+"50嵐 實踐店":"Chain bubble tea, classic teas and pearl milk tea at friendly prices",
+"可不可熟成茶行 台北大直店":"Aged black tea specialist; popular au lait and cold-brew series",
+"山居甜品":"Shaved ice and sweet soups with handmade taro balls, very cheap",
+"豆鄉村冰品豆花專賣店":"Tofu pudding and shaved ice in a Beian Rd alley; cash only",
+"頂好早餐":"Toast, burgers, egg crepes, teppanyaki noodles",
+"松木小館":"Chinese stir-fry set meals (with sides, drink and rice)",
+"媽媽小筑滷肉飯店":"Old-style braised pork rice, lunch boxes",
+"樂川小館":"Braised beef noodle soup, dry-mixed rice, spicy small plates",
+"THE DOOR 樂多":"American brunch, burgers, pasta",
+"永安飯包便當":"Chicken leg and pork chop lunch boxes (with three sides)",
+"永昌蕃茄牛肉麵":"Tomato beef noodle soup, fried rice",
+"十八鍋精緻涮涮鍋":"Shabu-shabu, à la carte meat and seafood plates",
+"I'm PASTA 大直店":"Pasta, risotto, baked dishes",
+"芊松賀":"Japanese rice bowls, udon",
+"南洋屋 PONDOK ROTI":"Indonesian food, beef meatball soup, Southeast Asian ice desserts",
+"大直粥品 大直店":"Cantonese congee, health congee, many varieties",
+"山西刀削麵（大直店）":"Beef noodle soup, knife-cut noodles, fried noodles, dumpling soup",
+"佳佳牛排館 大直店":"Steak, self-serve salad bar",
+"大直彰化肉圓":"Handmade bawan, thick soups, mee sua (since 1972)",
+"香香麵坊 乾麵 dami":"Old-style dry noodles, braised small plates (next to Dazhi MRT)",
+"阿國仔傳統切仔麵":"Traditional blanched noodles, assorted cold cuts, soups",
+"韓亞小館":"Korean bibimbap, grilled pork rice bowl, gimbap",
+"金春喜韓廚 台北大直店":"Korean pork soup with rice, fried dishes, jajangmyeon",
+"清心福全 北安店":"Classic teas, milk tea, fresh milk, Youduo series",
+"東方泰國料理":"Affordable Thai food, green curry, moon shrimp cake",
+"夫妻韓式餐廳":"Home-style Korean food, soft tofu stew, BBQ",
+"高雄黑輪大王":"Oden, mee sua",
+"麵匡匡拉麵食堂 大直實踐店":"Japanese ramen: tonkotsu, milk-cheese, spicy",
+"梁社漢排骨 中山大直店":"Pork chop rice, spicy-pepper chicken rice, lunch boxes (rice or noodles)",
+"桶一天下 大直店":"Freshly braised snacks (lu wei)",
+"岡山羊肉大王":"Lamb dishes and lamb soup"
+};
+const descOf=s=>lang==="en"?(EN_T[s.n]||s.t):s.t;
+const palName=p=>lang==="en"?(PAL_EN[p[0]]||p[1]):p[1];
+function setPh(){$("q").placeholder=T("ph");$("q").setAttribute("aria-label",T("phAria"))}
+
 const parseList=str=>str.split("|").map(x=>{
   const m=x.trim().match(/^(.+?)\s+(\d+(?:[\/–]\d+)*)(起)?$/);
   if(!m) throw new Error("bad item: "+x);
@@ -615,12 +756,12 @@ const st={cat:"food",ty:"全部",open:false};
 const $=id=>document.getElementById(id);
 function buildTypes(){const box=$("types");box.innerHTML="";
   box.hidden=st.cat!=="food";
-  FOOD_TYPES.forEach(label=>{const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=label;b.setAttribute("aria-pressed",String(label===st.ty));
+  FOOD_TYPES.forEach(label=>{const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=tyL(label);b.setAttribute("aria-pressed",String(label===st.ty));
     b.onclick=()=>{st.ty=label;box.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));render()};box.appendChild(b)})}
 buildTypes();
 $("cat").querySelectorAll("button").forEach(b=>b.onclick=()=>{st.cat=b.dataset.c;st.ty="全部";
   $("cat").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-  $("q").placeholder=st.cat==="food"?"搜尋店名或餐點":"搜尋店名或飲料";buildTypes();render()});
+  setPh();buildTypes();render()});
 $("openNow").onclick=e=>{st.open=!st.open;e.currentTarget.setAttribute("aria-pressed",String(st.open));render()};
 $("q").oninput=render;$("sort").onchange=render;
 
@@ -635,16 +776,16 @@ const esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const mk=(t,q)=>{if(!q)return esc(t);const i=t.toLowerCase().indexOf(q);return i<0?esc(t):esc(t.slice(0,i))+"<mark>"+esc(t.slice(i,i+q.length))+"</mark>"+esc(t.slice(i+q.length))};
 const li=(x,q)=>`<li><span>${mk(x.n,q)}</span><span class="dots"></span><span class="pr">$${esc(x.txt)}</span></li>`;
 const DN="日一二三四五六";
-const hoursText=s=>s.h?s.h.replace(/,/g," / ")+(s.hd?"；"+Object.entries(s.hd).map(([d,v])=>`週${DN[d]} ${v.replace(/,/g," / ")}`).join("；"):"")+(s.off&&s.off.length?`，週${s.off.map(d=>DN[d]).join("、")}公休`:""):"營業時間請看 Google 地圖";
-const badgeOf=(s,now)=>{const so=status(s,now);return so==null?"":so?`<span class="b open">營業中</span>`:`<span class="b closed">休息中</span>`};
+const hoursText=s=>T("hours")(s);
+const badgeOf=(s,now)=>{const so=status(s,now);return so==null?"":so?`<span class="b open">${T("open")}</span>`:`<span class="b closed">${T("closed")}</span>`};
 function cardHTML(s,now,q){
   const range=`<span class="range">$${s.min}${s.max>s.min?"–"+s.max:""}</span>`;
   let hit="",items=[];
-  if(q){const m=s.all.filter(x=>x.n.toLowerCase().includes(q));if(m.length){items=m.slice(0,3);hit=`<div class="hit">符合「${esc(q)}」的品項${m.length>3?`（共 ${m.length} 項）`:""}</div>`}}
-  return `<article class="card" data-i="${s.id}" role="button" tabindex="0" aria-label="查看${esc(s.n)}完整菜單"><div class="head"><div><h2>${esc(s.n)}</h2><div class="tag">${esc(s.ty)}・${esc(s.t)}</div></div>${range}</div>
+  if(q){const m=s.all.filter(x=>x.n.toLowerCase().includes(q));if(m.length){items=m.slice(0,3);hit=`<div class="hit">${T("hit")(esc(q),m.length)}</div>`}}
+  return `<article class="card" data-i="${s.id}" role="button" tabindex="0" aria-label="${esc(T("view")(s.n))}"><div class="head"><div><h2>${esc(s.n)}</h2><div class="tag">${esc(tyL(s.ty))}${SEP()}${esc(descOf(s))}</div></div>${range}</div>
   ${hit}${items.length?`<ul class="menu">${items.map(x=>li(x,q)).join("")}</ul>`:""}
-  <div class="meta"><div class="badges"><span class="b walk">步行約 ${s.w} 分</span>${badgeOf(s,now)}${s.part?`<span class="b">非完整菜單</span>`:""}</div></div>
-  <div class="more"><span>看完整菜單・${s.all.length} 項</span><span aria-hidden="true">›</span></div></article>`}
+  <div class="meta"><div class="badges"><span class="b walk">${T("walk")(s.w)}</span>${badgeOf(s,now)}${s.part?`<span class="b">${T("partial")}</span>`:""}</div></div>
+  <div class="more"><span>${T("more")(s.all.length)}</span><span aria-hidden="true">›</span></div></article>`}
 
 /* 店家詳情（完整菜單） */
 const detail=$("detail");let lastFocus=null;
@@ -652,16 +793,16 @@ function openDetail(id){
   const s=D[id],now=taipeiNow(),q=$("q").value.trim().toLowerCase();
   const mq=s.a?encodeURIComponent("台北市中山區"+s.a+" "+s.n):encodeURIComponent(s.n+" "+s.ll.join(","));
   lastFocus=document.activeElement;
-  detail.innerHTML=`<div class="dh"><div class="wrap2"><button type="button" class="back" id="dback">‹ 返回</button><div class="dt">${esc(s.n)}</div></div></div>
+  detail.innerHTML=`<div class="dh"><div class="wrap2"><button type="button" class="back" id="dback">${T("back")}</button><div class="dt">${esc(s.n)}</div></div></div>
   <div class="body"><div class="info">
-    <div class="tag" style="margin:0">${esc(s.ty)}・${esc(s.t)}</div>
-    <div class="badges"><span class="b walk">步行約 ${s.w} 分</span>${badgeOf(s,now)}${s.gv?`<span class="b">Google 地圖已核對</span>`:""}${s.part?`<span class="b">非完整菜單</span>`:""}<span class="b">${s.min===s.max?"$"+s.min:"$"+s.min+"–"+s.max}</span></div>
+    <div class="tag" style="margin:0">${esc(tyL(s.ty))}${SEP()}${esc(descOf(s))}</div>
+    <div class="badges"><span class="b walk">${T("walk")(s.w)}</span>${badgeOf(s,now)}${s.gv?`<span class="b">${T("gv")}</span>`:""}${s.part?`<span class="b">${T("partial")}</span>`:""}<span class="b">${s.min===s.max?"$"+s.min:"$"+s.min+"–"+s.max}</span></div>
     <div>${esc(hoursText(s))}</div>
-    <div>${s.a?esc(s.a)+"　":""}<a class="map" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${mq}">開地圖</a></div>
+    <div>${s.a?esc(s.a)+"　":""}<a class="map" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${mq}">${T("openMap")}</a></div>
     ${s.n2?`<div class="note">${esc(s.n2)}</div>`:""}</div>
   ${s.cats.length>1?`<div class="jump row scroll">${s.cats.map((c,i)=>`<button type="button" class="chip line" data-j="${i}">${esc(c[0])}</button>`).join("")}</div>`:""}
   ${s.cats.map(([c,l],i)=>`<section id="sec${i}"><h3>${esc(c)}</h3><ul class="menu">${l.map(x=>li(x,q)).join("")}</ul></section>`).join("")}
-  <div class="src">共 ${s.all.length} 項・來源：${esc(s.ms)}</div></div>`;
+  <div class="src">${T("src")(s.all.length)}${esc(s.ms)}</div></div>`;
   detail.hidden=false;document.body.style.overflow="hidden";detail.scrollTop=0;
   $("dback").onclick=closeDetail;$("dback").focus();
   detail.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{const e=$("sec"+b.dataset.j);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})});
@@ -673,20 +814,20 @@ document.addEventListener("keydown",e=>{const c=e.target.closest&&e.target.close
   if(e.key==="Escape"){if(!detail.hidden)closeDetail();else if(!sheet.hidden)closeSheet()}});
 
 let current=[];
-function rlabel(){$("rf-l").textContent=(st.cat==="food"&&st.ty!=="全部")?"隨機吃一家・"+st.ty:"隨機吃一家"}
+function rlabel(){$("rf-l").textContent=(st.cat==="food"&&st.ty!=="全部")?T("randFood")+SEP()+tyL(st.ty):T("randFood")}
 function render(){rlabel();
   const q=$("q").value.trim().toLowerCase(),now=taipeiNow();
   let list=D.filter(s=>{
     if(st.cat==="drink"?!s.drink:s.drink)return false;
     if(st.cat==="food"&&st.ty!=="全部"&&s.ty!==st.ty)return false;
-    if(q&&!(s.n+s.t+s.all.map(x=>x.n).join("")).toLowerCase().includes(q))return false;
+    if(q&&!(s.n+s.t+(lang==="en"?(EN_T[s.n]||""):"")+s.all.map(x=>x.n).join("")).toLowerCase().includes(q))return false;
     if(st.open&&status(s,now)!==true)return false;return true});
   const k=$("sort").value;
   list.sort((a,b)=>k==="name"?a.n.localeCompare(b.n,"zh-Hant"):k==="walk"?a.w-b.w||a.n.localeCompare(b.n,"zh-Hant"):k==="pasc"?a.min-b.min:b.max-a.max);
   current=list;
   const tot=D.filter(s=>st.cat==="drink"?s.drink:!s.drink).length;
-  $("count").textContent=`共 ${list.length} 家（${st.cat==="drink"?"手搖飲":"食物"}收錄 ${tot} 家）`+(st.open?"・未查到營業時段的店不會列入":"");
-  $("grid").innerHTML=list.length?list.map(s=>cardHTML(s,now,q)).join(""):`<div class="empty">沒有符合的店。換個關鍵字或類型試試。</div>`;
+  $("count").textContent=T("count")(list.length,tot,st.cat==="drink",st.open);
+  $("grid").innerHTML=list.length?list.map(s=>cardHTML(s,now,q)).join(""):`<div class="empty">${T("empty")}</div>`;
 }
 
 /* 隨機挑選 */
@@ -699,9 +840,9 @@ function pickOne(kind){
   const ft=(kind==="food"&&st.cat==="food")?st.ty:"全部";
   const pool=D.filter(s=>kind==="drink"?s.drink:(!s.drink&&(ft==="全部"||s.ty===ft)));
   clearInterval(timer);
-  if(!pool.length){sheet.innerHTML=`<div class="pick">目前沒有符合條件的店</div><div class="acts"><button type="button" id="sc" style="grid-column:1/3">關閉</button></div>`;$("sc").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;return}
+  if(!pool.length){sheet.innerHTML=`<div class="pick">${T("noPool")}</div><div class="acts"><button type="button" id="sc" style="grid-column:1/3">${T("close")}</button></div>`;$("sc").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;return}
   const final=pool[Math.floor(Math.random()*pool.length)];
-  sheet.innerHTML=`<div class="pick spin" id="pk">…</div><div id="res"></div><div class="acts"><button type="button" id="again">再抽一次</button><button type="button" class="go" id="close">就吃這家</button></div>`;
+  sheet.innerHTML=`<div class="pick spin" id="pk">…</div><div id="res"></div><div class="acts"><button type="button" id="again">${T("again")}</button><button type="button" class="go" id="close">${T("eat")}</button></div>`;
   sheet.hidden=false;shade.hidden=false;
   $("again").onclick=()=>pickOne(kind);$("close").onclick=()=>closeSheet();
   const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -717,12 +858,24 @@ try{const k=localStorage.getItem("pal");if(k&&PALS.some(p=>p[0]===k))setPal(k)}c
 function openPal(btn){
   lastBtn=btn;clearInterval(timer);const cur=document.documentElement.getAttribute("data-pal")||"";
   const mk=(k,l,bg,fg,ac)=>`<button type="button" data-k="${k}" aria-pressed="${cur===k}" style="background:${bg};color:${fg}"><i style="background:${ac}"></i>${l}</button>`;
-  sheet.innerHTML=`<p class="palt">選配色</p><div class="pgrid"><button type="button" data-k="" aria-pressed="${cur===""}" style="background:var(--surface);color:var(--fg);grid-column:1/3"><i style="background:var(--accent)"></i>預設（跟隨手機深淺色）</button><h3>淺色</h3>${PALS.filter(p=>!p[2]).map(p=>mk(p[0],p[1],p[3],p[4],p[5])).join("")}<h3>深色</h3>${PALS.filter(p=>p[2]).map(p=>mk(p[0],p[1],p[3],p[4],p[5])).join("")}</div><div class="acts"><button type="button" class="go" id="pdone" style="grid-column:1/3">完成</button></div>`;
+  sheet.innerHTML=`<p class="palt">${T("palTitle")}</p><div class="pgrid"><button type="button" data-k="" aria-pressed="${cur===""}" style="background:var(--surface);color:var(--fg);grid-column:1/3"><i style="background:var(--accent)"></i>${T("palDefault")}</button><h3>${T("light")}</h3>${PALS.filter(p=>!p[2]).map(p=>mk(p[0],palName(p),p[3],p[4],p[5])).join("")}<h3>${T("dark")}</h3>${PALS.filter(p=>p[2]).map(p=>mk(p[0],palName(p),p[3],p[4],p[5])).join("")}</div><div class="acts"><button type="button" class="go" id="pdone" style="grid-column:1/3">${T("done")}</button></div>`;
   sheet.querySelectorAll(".pgrid button").forEach(b=>b.onclick=()=>{setPal(b.dataset.k);sheet.querySelectorAll(".pgrid button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
   $("pdone").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;
 }
 $("palbtn").onclick=e=>openPal(e.currentTarget);
-render();
+function applyLang(){
+  document.documentElement.lang=lang==="en"?"en":"zh-TW";
+  document.title=T("title");
+  document.querySelectorAll("[data-l]").forEach(e=>{e.textContent=T(e.dataset.l)});
+  document.querySelectorAll("[data-lh]").forEach(e=>{e.innerHTML=T(e.dataset.lh)});
+  const lb=$("langbtn");lb.textContent=T("langBtn");lb.setAttribute("aria-label",T("langAria"));
+  $("cat").setAttribute("aria-label",T("catAria"));$("types").setAttribute("aria-label",T("typeAria"));$("sort").setAttribute("aria-label",T("sortAria"));
+  sheet.setAttribute("aria-label",T("sheetAria"));
+  $("rand-drink").querySelector("span").textContent=T("randDrink");
+  setPh();buildTypes();render();
+}
+$("langbtn").onclick=()=>{lang=lang==="en"?"zh":"en";try{localStorage.setItem("lang",lang)}catch(e){}applyLang()};
+applyLang();
 </script>
 
 </body>
