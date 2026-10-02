@@ -17,7 +17,7 @@
 - 已移除價格分類篩選。
 - 我的最愛：卡片與詳情頁有「♡ 收藏」，篩選列有「只看收藏」（隨機抽店也會只從收藏挑）；收藏以店名存在 localStorage（key: favs，有 try/catch），只存在該手機上。
 - 回報錯誤：詳情頁資訊區的「⚑ 回報錯誤」開底部面板（價格不對／營業時間不對／已歇業／菜單缺漏／其他＋說明）；沒有後端，送出時把內容複製到剪貼簿並開啟 https://ig.me/m/plus.zero.0317（IG 私訊），使用者貼上送出。若之後要自動收集，可改接 Google 表單或 Formspree。
-- 中英切換：右上角「EN／中文」按鈕（與配色按鈕同一列，手機寬度下獨立一列以免擠到說明文字），選擇存 localStorage（key: lang，有 try/catch）。語言資料在 index.html 的 `I`（介面字串）、`TYPE_EN`、`PAL_EN`、`EN_T`（每家店的簡述英文，鍵為店名）。英文版翻介面、類型、店家簡述（`EN_T`）、菜單品項（`EN_I`，英文名後面附小字中文原名）、菜單分類（`EN_C`）、備註（`EN_N`）；店名與來源（ms）維持中文。新增店家時要同步補 `EN_T`、`EN_I`、`EN_C`、`EN_N`（沒補會退回中文）。
+- 多語言（中文／English／日本語）：右上角語言下拉選單（`#langsel`，與配色按鈕同一列；手機寬度下獨立一列以免擠到說明文字），選擇存 localStorage（key: lang，值 zh／en／ja，有 try/catch）。介面字串在 index.html 的 `I`（`I.zh`／`I.en`／`I.ja`）。非中文語言各有一組字典：英文 `EN_T`（店家簡述，鍵為店名）／`EN_I`（菜單品項）／`EN_C`（分類）／`EN_N`（備註）／`TYPE_EN`／`PAL_EN`，日文對應 `JA_T`／`JA_I`／`JA_C`／`JA_N`／`TYPE_JA`／`PAL_JA`，由 `DICT` 統一取用。非中文時菜單品項顯示「翻譯名＋小字中文原名」，分類與備註只顯示翻譯；店名與來源（ms）維持中文。日文版使用 Noto Sans/Serif JP（`:root:lang(ja)`）。**新增店家時要同步在英文與日文兩組字典補 `T`、`I`、`C`、`N`**（沒補會退回中文）。
 
 ## PWA／離線／自動更新
 - 檔案：manifest.webmanifest、sw.js、favicon-48.png、icon-192/512.png、icon-maskable-512.png、apple-touch-icon.png、version.json、stamp.js。手機瀏覽器「加到主畫面」後以獨立視窗開啟（無網址列），可離線看（先連網取最新頁面，連不上才用快取）。
