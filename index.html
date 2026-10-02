@@ -90,6 +90,12 @@ body.diary-mode .bar .row,body.diary-mode .fabs{display:none}
 .dform .stars{display:flex;gap:4px}
 .dform .stars button{font-size:28px;line-height:1;background:none;border:0;color:var(--price);cursor:pointer;padding:2px 4px;min-height:44px}
 .dform .rtypes{margin:4px 0}
+.sug{max-height:230px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;margin-top:4px;background:var(--surface)}
+.sug[hidden]{display:none}
+.sugi{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;min-height:46px;padding:8px 12px;font:inherit;font-size:15px;color:var(--fg);background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer}
+.sugi:last-child{border-bottom:0}
+.sugi:active{background:var(--chip)}
+.sugi span{font-size:12px;color:var(--muted);flex:none}
 .dform .acts{grid-template-columns:repeat(auto-fit,minmax(88px,1fr))}
 .zhn{color:var(--muted);font-size:.82em}
 .range.hrs{white-space:nowrap}.range.hrs,.range.na{text-align:right;line-height:1.4}.range.na{color:var(--muted);font-family:var(--sans);font-weight:400;font-size:12px;max-width:6.5em}
@@ -649,7 +655,7 @@ const D=[
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
 /* 語言（中文／English）：介面、類型與店家簡述有英文；菜單品項與店名維持原文 */
-const LAST_UPDATED="2026/10/02 13:43";
+const LAST_UPDATED="2026/10/02 13:56";
 let lang="zh";
 try{const v=localStorage.getItem("lang");if(v==="en"||v==="zh"||v==="ja")lang=v}catch(e){}
 const TYPE_JA={"全部":"すべて","麵食":"麺類","飯・簡餐":"ご飯・定食","小吃・早餐":"軽食・朝食","速食":"ファストフード","義式・西餐":"洋食・イタリアン","日韓・異國":"日韓・各国料理","火鍋":"火鍋","咖啡・甜點":"カフェ・スイーツ","豆花・冰品":"豆花・氷菓","手搖飲":"ドリンク"};
@@ -678,7 +684,7 @@ zh:{
   close:"關閉",again:"再抽一次",eat:"就吃這家",
   palTitle:"選配色",palDefault:"預設（跟隨手機深淺色）",light:"淺色",dark:"深色",done:"完成",
   diaryTab:"食記",addDiary:"記到食記",diaryAdd:"＋ 新增食記",diaryEmpty:"還沒有食記。點「＋ 新增食記」記下今天吃了什麼，也可以在店家詳情按「記到食記」。",diaryTitleNew:"新增食記",diaryTitleEdit:"編輯食記",
-  dDate:"日期",dMeal:"餐別",meals:["早餐","午餐","晚餐","宵夜","點心"],dPlace:"店家",dPlacePh:"從清單選，或自己輸入",dFood:"吃了什麼",dFoodPh:"例如：排骨飯＋味噌湯",dCost:"花費（元，選填）",dRating:"評分",dNote:"備註",
+  dDate:"日期",dMeal:"餐別",meals:["早餐","午餐","晚餐","宵夜","點心"],dPlace:"店家",dPlacePh:"點這裡，從清單選店家（或自己輸入）",dQuick:"常用：最近吃過與收藏的店",dFood:"吃了什麼",dFoodPh:"例如：排骨飯＋味噌湯",dCost:"花費（元，選填）",dRating:"評分",dNote:"備註",
   dSave:"儲存",dCancel:"取消",dDelete:"刪除",dDeleteConfirm:"再按一次確認刪除",dNeed:"請至少填寫店家或吃了什麼",dNeedDate:"請選擇日期",dSaved:"已儲存 ✓",dEdit:"編輯",
   dStat:(n,c)=>"本月 "+n+" 筆・花費 $"+c,dTop:(p,n)=>"最常吃：「"+p+"」"+n+" 次",dExport:"匯出備份",dImport:"匯入備份",dBackupHint:"食記只存在這支手機上。換手機或清除瀏覽資料前，請先匯出備份。",dImportDone:n=>"已匯入 "+n+" 筆",dImportBad:"檔案格式不正確，無法匯入",
   lastUpd:"最後更新："+LAST_UPDATED,updMsg:"有新版本可用",updBtn:"立即更新",
@@ -706,7 +712,7 @@ en:{
   close:"Close",again:"Pick again",eat:"Eat here",
   palTitle:"Choose a theme",palDefault:"Default (follow device)",light:"Light",dark:"Dark",done:"Done",
   diaryTab:"Diary",addDiary:"Add to diary",diaryAdd:"+ Add entry",diaryEmpty:"No entries yet. Tap “+ Add entry” to log what you ate, or use “Add to diary” on a shop page.",diaryTitleNew:"New diary entry",diaryTitleEdit:"Edit entry",
-  dDate:"Date",dMeal:"Meal",meals:["Breakfast","Lunch","Dinner","Late night","Snack"],dPlace:"Place",dPlacePh:"Pick from the list or type your own",dFood:"What you ate",dFoodPh:"e.g. pork chop rice + miso soup",dCost:"Cost (NT$, optional)",dRating:"Rating",dNote:"Notes",
+  dDate:"Date",dMeal:"Meal",meals:["Breakfast","Lunch","Dinner","Late night","Snack"],dPlace:"Place",dPlacePh:"Tap here to pick a shop from the list (or type your own)",dQuick:"Quick pick: recent and saved shops",dFood:"What you ate",dFoodPh:"e.g. pork chop rice + miso soup",dCost:"Cost (NT$, optional)",dRating:"Rating",dNote:"Notes",
   dSave:"Save",dCancel:"Cancel",dDelete:"Delete",dDeleteConfirm:"Tap again to delete",dNeed:"Please enter a place or what you ate",dNeedDate:"Please choose a date",dSaved:"Saved ✓",dEdit:"Edit",
   dStat:(n,c)=>"This month: "+n+(n===1?" entry":" entries")+" · NT$"+c,dTop:(p,n)=>"Most visited: “"+p+"” ("+n+"×)",dExport:"Export backup",dImport:"Import backup",dBackupHint:"Your diary is stored only on this phone. Export a backup before changing phones or clearing browser data.",dImportDone:n=>"Imported "+n+" entries",dImportBad:"Invalid file, could not import",
   lastUpd:"Last updated: "+LAST_UPDATED+" (Taipei time)",updMsg:"A new version is available",updBtn:"Update",
@@ -734,7 +740,7 @@ ja:{
   close:"閉じる",again:"もう一度",eat:"ここにする",
   palTitle:"テーマを選ぶ",palDefault:"デフォルト（端末の明暗に合わせる）",light:"ライト",dark:"ダーク",done:"完了",
   diaryTab:"グルメ日記",addDiary:"日記に記録",diaryAdd:"＋ 日記を追加",diaryEmpty:"まだ日記がありません。「＋ 日記を追加」で今日食べたものを記録できます。お店の詳細ページの「日記に記録」からも追加できます。",diaryTitleNew:"日記を追加",diaryTitleEdit:"日記を編集",
-  dDate:"日付",dMeal:"食事",meals:["朝食","昼食","夕食","夜食","おやつ"],dPlace:"お店",dPlacePh:"リストから選ぶか、自由に入力",dFood:"食べたもの",dFoodPh:"例：排骨飯＋味噌汁",dCost:"金額（元・任意）",dRating:"評価",dNote:"メモ",
+  dDate:"日付",dMeal:"食事",meals:["朝食","昼食","夕食","夜食","おやつ"],dPlace:"お店",dPlacePh:"タップしてリストからお店を選ぶ（自由入力も可）",dQuick:"クイック選択：最近行った店とお気に入り",dFood:"食べたもの",dFoodPh:"例：排骨飯＋味噌汁",dCost:"金額（元・任意）",dRating:"評価",dNote:"メモ",
   dSave:"保存",dCancel:"キャンセル",dDelete:"削除",dDeleteConfirm:"もう一度押すと削除します",dNeed:"お店か食べたもののどちらかを入力してください",dNeedDate:"日付を選んでください",dSaved:"保存しました ✓",dEdit:"編集",
   dStat:(n,c)=>"今月 "+n+"件・合計 $"+c,dTop:(p,n)=>"よく行く店：「"+p+"」"+n+"回",dExport:"バックアップを書き出す",dImport:"バックアップを読み込む",dBackupHint:"日記はこの端末にのみ保存されます。機種変更やブラウザデータの消去の前にバックアップを書き出してください。",dImportDone:n=>n+"件を読み込みました",dImportBad:"ファイル形式が正しくないため読み込めません",
   lastUpd:"最終更新："+LAST_UPDATED+"（台北時間）",updMsg:"新しいバージョンがあります",updBtn:"今すぐ更新",
@@ -1066,6 +1072,7 @@ function importDiary(file){
   };
   r.readAsText(file);
 }
+const quickShops=()=>{const out=[],add=n=>{if(n&&D.some(s=>s.n===n)&&!out.includes(n))out.push(n)};[...diary].sort((a,b)=>(b.ts||0)-(a.ts||0)).forEach(x=>add(x.place));[...favs].forEach(add);return out.slice(0,8)};
 function openDiaryForm(e0,btn,shopName){
   lastBtn=btn||null;clearInterval(timer);
   const e=e0||{id:"",date:taipeiToday(),meal:guessMeal(),place:shopName||"",food:"",cost:"",rating:0,note:""};
@@ -1075,7 +1082,7 @@ function openDiaryForm(e0,btn,shopName){
   sheet.innerHTML=`<div class="dform"><p class="palt">${T(e.id?"diaryTitleEdit":"diaryTitleNew")}</p>
   <label for="dDate">${T("dDate")}</label><input type="date" id="dDate" value="${esc(e.date)}">
   <div class="flab">${T("dMeal")}</div><div class="rtypes" id="dMeal" role="group">${MEALS.map((k,i)=>`<button type="button" class="chip" data-m="${k}" aria-pressed="${k===meal}">${esc(T("meals")[i])}</button>`).join("")}</div>
-  <label for="dPlace">${T("dPlace")}</label><input id="dPlace" list="dShops" maxlength="60" autocomplete="off" placeholder="${esc(T("dPlacePh"))}" value="${esc(e.place)}"><datalist id="dShops">${D.map(s=>`<option value="${esc(s.n)}"></option>`).join("")}</datalist>
+  <label for="dPlace">${T("dPlace")}</label>${quickShops().length?`<div class="rtypes" id="dQuick" aria-label="${esc(T("dQuick"))}">${quickShops().map(n=>`<button type="button" class="chip line" data-q="${esc(n)}">${esc(n)}</button>`).join("")}</div>`:""}<input id="dPlace" maxlength="60" autocomplete="off" placeholder="${esc(T("dPlacePh"))}" value="${esc(e.place)}"><div class="sug" id="dSug" hidden></div>
   <label for="dFood">${T("dFood")}</label><input id="dFood" maxlength="100" placeholder="${esc(T("dFoodPh"))}" value="${esc(e.food)}">
   <label for="dCost">${T("dCost")}</label><input id="dCost" type="number" inputmode="numeric" min="0" value="${esc(costVal)}">
   <div class="flab">${T("dRating")}</div><div class="stars" id="dStars" role="group">${[1,2,3,4,5].map(n=>`<button type="button" data-st="${n}" aria-label="${n}/5">${n<=rating?"★":"☆"}</button>`).join("")}</div>
@@ -1086,6 +1093,18 @@ function openDiaryForm(e0,btn,shopName){
   sheet.hidden=false;shade.hidden=false;
   sheet.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{meal=b.dataset.m;sheet.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
   sheet.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const n=+b.dataset.st;rating=rating===n?0:n;sheet.querySelectorAll("[data-st]").forEach(x=>{x.textContent=+x.dataset.st<=rating?"★":"☆"})});
+  const pl=$("dPlace"),sug=$("dSug"),hideSug=()=>{sug.hidden=true};
+  const showSug=()=>{
+    const q=pl.value.trim().toLowerCase();
+    const list=q?D.filter(s=>(s.n+" "+s.t+" "+(DICT[lang]?(DICT[lang].T[s.n]||""):"")).toLowerCase().includes(q)).slice(0,8):[...D].sort((a,b)=>a.w-b.w).slice(0,8);
+    if(!list.length||(list.length===1&&list[0].n===pl.value.trim())){hideSug();return}
+    sug.innerHTML=list.map(s=>`<button type="button" class="sugi" data-pick="${esc(s.n)}"><b>${esc(s.n)}</b><span>${esc(tyL(s.ty))}・${T("walk")(s.w)}</span></button>`).join("");
+    sug.hidden=false;
+  };
+  pl.addEventListener("focus",showSug);pl.addEventListener("input",showSug);pl.addEventListener("blur",()=>setTimeout(hideSug,150));
+  sug.addEventListener("pointerdown",ev=>ev.preventDefault());
+  sug.addEventListener("click",ev=>{const b=ev.target.closest("[data-pick]");if(b){pl.value=b.dataset.pick;hideSug()}});
+  sheet.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{pl.value=b.dataset.q;hideSug()});
   $("dcancel").onclick=()=>closeSheet();
   if($("ddel"))$("ddel").onclick=ev=>{
     if(!armed){armed=true;ev.currentTarget.textContent=T("dDeleteConfirm");return}
@@ -1137,7 +1156,7 @@ $("langsel").onchange=e=>{lang=e.target.value;try{localStorage.setItem("lang",la
 applyLang();
 
 /* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
-const APP_VERSION="9d27d75142";
+const APP_VERSION="ae00e05dde";
 function showUpdate(){
   if(document.getElementById("upd"))return;
   const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");
