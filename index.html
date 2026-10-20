@@ -120,6 +120,7 @@ details.full .src{font-size:12px;color:var(--muted);margin:12px 0}
 footer{border-top:1px solid var(--line);padding-block:20px 120px;color:var(--muted);font-size:13px}
 footer p{margin:0 0 8px;max-width:75ch}
 footer a{color:var(--accent);font-weight:700;text-decoration:none}
+.egg .egglink{font:inherit;color:var(--accent);font-weight:700;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .fabs{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;justify-content:center;gap:10px;padding:0 16px;pointer-events:none}.fab{pointer-events:auto;display:flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:16px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:0 24px;min-height:52px;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}
 .fab{min-width:0}.fab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:420px){.fab{padding:0 16px;gap:6px;font-size:15px}.fab svg{width:20px;height:20px}}
 .fab{min-width:0;flex:1 1 0;max-width:240px;justify-content:center}.fab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:420px){.fab{padding:0 12px;gap:6px;font-size:15px}}
@@ -213,6 +214,7 @@ mark{background:color-mix(in srgb,var(--price) 22%,transparent);color:inherit;bo
 
 <footer><div class="wrap">
   <p data-lh="footer">網站如果有問題，或是有任何想法與建議，歡迎透過 IG 聯絡我：<a href="https://www.instagram.com/plus.zero.0317/" target="_blank" rel="noopener">@plus.zero.0317</a></p>
+  <p class="egg" data-lh="egg"></p>
   <p class="lastupd" data-lh="lastUpd"></p>
 </div></footer>
 
@@ -830,7 +832,7 @@ const D=[
 const FOOD_TYPES=["全部","麵食","飯・簡餐","小吃・早餐","速食","義式・西餐","日韓・異國","火鍋","咖啡・甜點","豆花・冰品"];
 
 /* 語言（中文／English）：介面、類型與店家簡述有英文；菜單品項與店名維持原文 */
-const LAST_UPDATED="2026/10/07 01:21";
+const LAST_UPDATED="2026/10/20 15:11";
 let lang="zh";
 try{const v=localStorage.getItem("lang");if(v==="en"||v==="zh"||v==="ja")lang=v}catch(e){}
 const TYPE_JA={"全部":"すべて","麵食":"麺類","飯・簡餐":"ご飯・定食","小吃・早餐":"軽食・朝食","速食":"ファストフード","義式・西餐":"洋食・イタリアン","日韓・異國":"日韓・各国料理","火鍋":"火鍋","咖啡・甜點":"カフェ・スイーツ","豆花・冰品":"豆花・氷菓","手搖飲":"ドリンク"};
@@ -862,6 +864,7 @@ zh:{
   dDate:"日期",dMeal:"餐別",meals:["早餐","午餐","晚餐","宵夜","點心"],dPlace:"店家",dPlacePh:"點這裡，從清單選店家（或自己輸入）",dQuick:"常用：最近吃過與收藏的店",dFood:"吃了什麼",dFoodPh:"例如：排骨飯＋味噌湯",dCost:"花費（元，選填）",dRating:"評分",dNote:"備註",
   dSave:"儲存",dCancel:"取消",dDelete:"刪除",dDeleteConfirm:"再按一次確認刪除",dNeed:"請至少填寫店家或吃了什麼",dNeedDate:"請選擇日期",dSaved:"已儲存 ✓",dEdit:"編輯",
   dStat:(n,c)=>"本月 "+n+" 筆・花費 $"+c,dTop:(p,n)=>"最常吃：「"+p+"」"+n+" 次",dBackupHint:"食記只存在這支手機上。換手機、清除瀏覽資料或刪除主畫面 App 後，紀錄會消失。",
+  egg:`🍧 小彩蛋：版主最近愛吃 <button type="button" class="egglink" data-shop="北極熊綿綿冰">北極熊</button> 的冬瓜鮮奶茶，還有地瓜球`,
   lastUpd:"最後更新："+LAST_UPDATED,updMsg:"有新版本可用",updBtn:"立即更新",
   fav:"♡ 收藏",faved:"♥ 已收藏",favOnly:"只看收藏",emptyFav:"還沒有收藏的店。點卡片上的「♡ 收藏」就能加入。",
   report:"回報錯誤",repTitle:"回報錯誤",repTypes:["價格不對","營業時間不對","已歇業","菜單缺漏","其他"],repDesc:"說明（例如：哪一項、正確的價格或時間）",
@@ -890,6 +893,7 @@ en:{
   dDate:"Date",dMeal:"Meal",meals:["Breakfast","Lunch","Dinner","Late night","Snack"],dPlace:"Place",dPlacePh:"Tap here to pick a shop from the list (or type your own)",dQuick:"Quick pick: recent and saved shops",dFood:"What you ate",dFoodPh:"e.g. pork chop rice + miso soup",dCost:"Cost (NT$, optional)",dRating:"Rating",dNote:"Notes",
   dSave:"Save",dCancel:"Cancel",dDelete:"Delete",dDeleteConfirm:"Tap again to delete",dNeed:"Please enter a place or what you ate",dNeedDate:"Please choose a date",dSaved:"Saved ✓",dEdit:"Edit",
   dStat:(n,c)=>"This month: "+n+(n===1?" entry":" entries")+" · NT$"+c,dTop:(p,n)=>"Most visited: “"+p+"” ("+n+"×)",dBackupHint:"Your diary is stored only on this phone. It is lost if you change phones, clear browser data or delete the home-screen app.",
+  egg:`🍧 Easter egg: lately I can’t get enough of the winter melon fresh milk tea from <button type="button" class="egglink" data-shop="北極熊綿綿冰">北極熊綿綿冰</button>, and sweet potato balls`,
   lastUpd:"Last updated: "+LAST_UPDATED+" (Taipei time)",updMsg:"A new version is available",updBtn:"Update",
   fav:"♡ Save",faved:"♥ Saved",favOnly:"Saved only",emptyFav:"No saved places yet. Tap “♡ Save” on a card to add one.",
   report:"Report a problem",repTitle:"Report a problem",repTypes:["Wrong price","Wrong hours","Closed down","Menu missing items","Other"],repDesc:"Details (e.g. which item, the correct price or hours)",
@@ -918,6 +922,7 @@ ja:{
   dDate:"日付",dMeal:"食事",meals:["朝食","昼食","夕食","夜食","おやつ"],dPlace:"お店",dPlacePh:"タップしてリストからお店を選ぶ（自由入力も可）",dQuick:"クイック選択：最近行った店とお気に入り",dFood:"食べたもの",dFoodPh:"例：排骨飯＋味噌汁",dCost:"金額（元・任意）",dRating:"評価",dNote:"メモ",
   dSave:"保存",dCancel:"キャンセル",dDelete:"削除",dDeleteConfirm:"もう一度押すと削除します",dNeed:"お店か食べたもののどちらかを入力してください",dNeedDate:"日付を選んでください",dSaved:"保存しました ✓",dEdit:"編集",
   dStat:(n,c)=>"今月 "+n+"件・合計 $"+c,dTop:(p,n)=>"よく行く店：「"+p+"」"+n+"回",dBackupHint:"日記はこの端末にのみ保存されます。機種変更、ブラウザデータの消去、ホーム画面アプリの削除で記録は失われます。",
+  egg:`🍧 ちょっとしたおまけ：管理人の最近のお気に入りは <button type="button" class="egglink" data-shop="北極熊綿綿冰">北極熊綿綿冰</button> の冬瓜ミルクティーと、さつまいもボール`,
   lastUpd:"最終更新："+LAST_UPDATED+"（台北時間）",updMsg:"新しいバージョンがあります",updBtn:"今すぐ更新",
   fav:"♡ お気に入り",faved:"♥ 登録済み",favOnly:"お気に入りのみ",emptyFav:"お気に入りのお店はまだありません。カードの「♡ お気に入り」をタップして追加できます。",
   report:"誤りを報告",repTitle:"誤りを報告",repTypes:["価格が違う","営業時間が違う","閉店している","メニューの漏れ","その他"],repDesc:"詳細（例：どの品目か、正しい価格や時間）",
@@ -1324,6 +1329,7 @@ function openPal(btn){
   $("pdone").onclick=()=>closeSheet();sheet.hidden=false;shade.hidden=false;
 }
 $("palbtn").onclick=e=>openPal(e.currentTarget);
+document.querySelector("footer").addEventListener("click",e=>{const b=e.target.closest(".egglink");if(!b)return;const i=D.findIndex(x=>x.n===b.dataset.shop);if(i>=0)openDetail(i)});
 function applyLang(){
   document.documentElement.lang=lang==="en"?"en":lang==="ja"?"ja":"zh-TW";
   document.title=T("title");
@@ -1339,7 +1345,7 @@ $("langsel").onchange=e=>{lang=e.target.value;try{localStorage.setItem("lang",la
 applyLang();
 
 /* PWA：離線使用與自動更新。version.json 由 stamp.js 產生；開啟或回到 App 時比對，有新版就自動重新載入（正在看詳情或面板時改顯示提示條）。 */
-const APP_VERSION="066d390ad0";
+const APP_VERSION="124f18a988";
 function showUpdate(){
   if(document.getElementById("upd"))return;
   const b=document.createElement("div");b.className="upd";b.id="upd";b.setAttribute("role","status");
